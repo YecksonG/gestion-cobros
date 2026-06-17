@@ -11,31 +11,57 @@ export const GAS_SCRIPT_URL = isProduction
 // Alias interno
 const SCRIPT_URL = GAS_SCRIPT_URL;
 
+// ═══════════════════════════════════════════════════════════════════════
+// CACHÉ EN MEMORIA — TTL 2 minutos
+// Parchea axios.get y axios.post globalmente para que todos los
+// componentes se beneficien sin cambiar ningún archivo.
+// GET al GAS → sirve desde caché si tiene < 2 min.
+// POST al GAS exitoso → limpia el caché completo.
+// ═══════════════════════════════════════════════════════════════════════
+const _cache = new Map();
+const CACHE_TTL = 2 * 60 * 1000;
+
+const _origGet  = axios.get.bind(axios);
+const _origPost = axios.post.bind(axios);
+
+axios.get = async (url, config) => {
+  if (typeof url === 'string' && (url.includes('script.google.com') || url === '/api')) {
+    const hit = _cache.get(url);
+    if (hit && Date.now() - hit.ts < CACHE_TTL) return { data: hit.data };
+    const res = await _origGet(url, config);
+    _cache.set(url, { data: res.data, ts: Date.now() });
+    return res;
+  }
+  return _origGet(url, config);
+};
+
+axios.post = async (url, data, config) => {
+  const res = await _origPost(url, data, config);
+  // Cualquier POST exitoso al GAS invalida todo el caché
+  if (res?.data?.success) _cache.clear();
+  return res;
+};
+
+export const invalidarCache = () => _cache.clear();
+
 //  ═══════════════════════════════════════════════════════════════════════
 //  CONEXIÓN REAL CON EL DASHBOARD
 //  ═══════════════════════════════════════════════════════════════════════
 export const obtenerResumenFinanciero = async () => {
   try {
-    const response = await axios.get(`${SCRIPT_URL}?action=getDashboardData`);
+    const { data } = await axios.get(`${SCRIPT_URL}?action=getDashboardData`);
 
-    // Filtro de seguridad: descartar contratos vacíos o con cliente sin nombre
-    const contratosValidos = (response.data.contratos || []).filter(
+    const contratosValidos = (data.contratos || []).filter(
       (contrato) =>
         contrato.cliente &&
         typeof contrato.cliente === 'string' &&
         contrato.cliente.trim() !== ''
     );
 
-    return {
-      ...response.data,
-      contratos: contratosValidos
-    };
+    return { ...data, contratos: contratosValidos };
   } catch (error) {
     console.error("Error al obtener el Dashboard:", error);
-    // Si falla, devolvemos valores en cero para no romper la pantalla
-    return {
-      canonEsperado: 0, recaudado: 0, moraAplicada: 0, saldoPendiente: 0, contratos: []
-    };
+    return { canonEsperado: 0, recaudado: 0, moraAplicada: 0, saldoPendiente: 0, contratos: [] };
   }
 };
 
@@ -44,21 +70,16 @@ export const obtenerResumenFinanciero = async () => {
 // ═══════════════════════════════════════════════════════════════════════
 export const obtenerInquilinos = async () => {
   try {
-    // Hacemos la petición GET a tu Google Apps Script pidiendo la acción 'getInquilinos'
-    const response = await axios.get(`${SCRIPT_URL}?action=getInquilinos`);
+    const { data } = await axios.get(`${SCRIPT_URL}?action=getInquilinos`);
 
-    // Filtro de seguridad: descartar registros vacíos o con espacios en blanco
-    const inquilinosValidos = response.data.filter(
+    return (Array.isArray(data) ? data : []).filter(
       (cliente) =>
         cliente.nombre &&
         typeof cliente.nombre === 'string' &&
         cliente.nombre.trim() !== ''
     );
-
-    return inquilinosValidos;
   } catch (error) {
     console.error("Error al obtener los datos de la base de datos:", error);
-    // Retornamos un arreglo vacío para que la aplicación no se rompa si hay un fallo
     return [];
   }
 };
