@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Uso - Control Terravia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #d4a373;
+      --primary-dark: #995a37;
+      --bg-dark: #1e2631;
+      --bg-darker: #12181f;
+      --text-light: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border: #374151;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 280px;
+      background: rgba(30, 38, 49, 0.95);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      position: sticky;
+      top: 0;
+      padding: 2rem 0;
+    }
+
+    .sidebar-header {
+      padding: 0 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+    }
+
+    .sidebar-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.5rem;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-section-title {
+      padding: 0 1.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .nav-item {
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+      margin: 0.25rem 0;
+    }
+
+    .nav-item:hover {
+      background: rgba(212, 163, 115, 0.1);
+      border-left-color: var(--primary);
+    }
+
+    .nav-item.active {
+      background: rgba(212, 163, 115, 0.15);
+      border-left-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* MAIN CONTENT */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 3rem;
+    }
+
+    .content-section {
+      display: none;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* HEADER */
+    .section-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-icon {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* CONTENT */
+    .subsection {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+    }
+
+    .subsection-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .subsection-text {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .step-list {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: rgba(212, 163, 115, 0.05);
+      border-left: 3px solid var(--primary);
+      border-radius: 0.5rem;
+    }
+
+    .step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2.5rem;
+      height: 2.5rem;
+      background: var(--primary);
+      color: var(--bg-dark);
+      border-radius: 50%;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .step-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .step-description {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* SCREENSHOT PLACEHOLDER */
+    .screenshot {
+      margin: 2rem 0;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px dashed var(--border);
+      border-radius: 0.75rem;
+      text-align: center;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .screenshot img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .screenshot-placeholder {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .screenshot-label {
+      font-size: 0.8rem;
+      color: var(--primary);
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+
+    /* CARDS */
+    .info-card {
+      padding: 1.5rem;
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid #3b82f6;
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .info-card.warning {
+      background: rgba(245, 158, 11, 0.1);
+      border-left-color: var(--warning);
+    }
+
+    .info-card.success {
+      background: rgba(16, 185, 129, 0.1);
+      border-left-color: var(--success);
+    }
+
+    .info-card-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-card-text {
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    /* TABS */
+    .tab-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-button {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-weight: 600;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tab-button:hover {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-button.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .main {
+        padding: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">TERRAVIA</div>
+        <div class="sidebar-subtitle">Manual de Uso</div>
+      </div>
+
+      <!-- INTRODUCIÓN -->
+      <div class="nav-section">
+        <div class="nav-section-title">📘 Inicio</div>
+        <div class="nav-item active" onclick="switchSection('intro')">Introducción</div>
+        <div class="nav-item" onclick="switchSection('inicio-rapido')">Inicio Rápido</div>
+      </div>
+
+      <!-- PERSONAL DE COBRANZA -->
+      <div class="nav-section">
+        <div class="nav-section-title">👤 Cobranza</div>
+        <div class="nav-item" onclick="switchSection('bienvenida')">Panel de Bienvenida</div>
+        <div class="nav-item" onclick="switchSection('agenda')">Agenda de Cobros</div>
+        <div class="nav-item" onclick="switchSection('registro-cobros')">Registro de Cobros</div>
+        <div class="nav-item" onclick="switchSection('inquilinos')">Directorio de Inquilinos</div>
+        <div class="nav-item" onclick="switchSection('tasas')">Tasas BCV</div>
+      </div>
+
+      <!-- ADMINISTRADOR -->
+      <div class="nav-section">
+        <div class="nav-section-title">⚙️ Administrador</div>
+        <div class="nav-item" onclick="switchSection('dashboard')">Dashboard</div>
+        <div class="nav-item" onclick="switchSection('agregar-cliente')">Agregar Cliente</div>
+        <div class="nav-item" onclick="switchSection('editar-cliente')">Editar Cliente</div>
+        <div class="nav-item" onclick="switchSection('historial')">Historial de Cambios</div>
+      </div>
+
+      <!-- AYUDA -->
+      <div class="nav-section">
+        <div class="nav-section-title">❓ Soporte</div>
+        <div class="nav-item" onclick="switchSection('faq')">Preguntas Frecuentes</div>
+        <div class="nav-item" onclick="switchSection('troubleshoot')">Solución de Problemas</div>
+      </div>
+
+      <!-- BOTÓN VOLVER AL INICIO -->
+      <div style="padding: 1rem; border-top: 1px solid var(--border); margin-top: auto;">
+        <a href="/" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: linear-gradient(135deg, rgba(212, 163, 115, 0.2), rgba(153, 90, 55, 0.2)); border: 1px solid var(--primary); color: var(--primary); text-decoration: none; border-radius: 0.5rem; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; cursor: pointer;" onmouseover="this.style.background='linear-gradient(135deg, rgba(212, 163, 115, 0.3), rgba(153, 90, 55, 0.3))'; this.style.boxShadow='0 0 12px rgba(212, 163, 115, 0.2)';" onmouseout="this.style.background='linear-gradient(135deg, rgba(212, 163, 115, 0.2), rgba(153, 90, 55, 0.2))'; this.style.boxShadow='none';">
+          <span>⌂</span>
+          <span>Volver al Inicio</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- INTRODUCCIÓN -->
+      <section id="intro" class="content-section active">
+        <div class="section-header">
+          <div class="section-icon">📘</div>
+          <div class="section-title">Bienvenido a Control Terravia</div>
+          <div class="section-subtitle">Sistema Integral de Gestión de Arrendamientos</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Qué es Control Terravia?</div>
+          <div class="subsection-text">
+            Control Terravia es una plataforma completa diseñada para gestionar eficientemente arrendamientos, cobros mensuales,
+            y auditoría de operaciones en condominios y complejos habitacionales. Ofrece herramientas intuitivas para
+            personal de cobranza y administradores.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Funcionalidades Principales</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">📅 Agenda de Cobros</div>
+                <div class="step-description">Calendario mensual interactivo con estado de pagos y clientes morosos</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">💰 Registro de Pagos</div>
+                <div class="step-description">Ingreso rápido de cobros con cálculo automático de mora</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">📊 Dashboard Analítico</div>
+                <div class="step-description">Métricas en tiempo real, desglose por inmueble y análisis de morosidad</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <div class="step-title">💱 Tasas BCV</div>
+                <div class="step-description">4 tasas de cambio actualizadas automáticamente + calculadora completa</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <div class="step-title">📋 Auditoría Completa</div>
+                <div class="step-description">Registro de todos los cambios del sistema con usuario y timestamp</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">🔒 Seguridad</div>
+          <div class="info-card-text">
+            El Dashboard e Historial de Cambios están protegidos con PIN. La sesión persiste 20 minutos
+            cuando navegas a otra sección, protegiéndote de accesos no autorizados.
+          </div>
+        </div>
+      </section>
+
+      <!-- INICIO RÁPIDO -->
+      <section id="inicio-rapido" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">⚡</div>
+          <div class="section-title">Inicio Rápido</div>
+          <div class="section-subtitle">Primeros pasos en el sistema</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">1. Acceder al Sistema</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">A</div>
+              <div class="step-content">
+                <div class="step-title">Abre Control Terravia</div>
+                <div class="step-description">Ingresa a la URL proporcionada en tu navegador</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">B</div>
+              <div class="step-content">
+                <div class="step-title">Verás el Panel de Bienvenida</div>
+                <div class="step-description">Pantalla principal con 7 opciones de acceso a las funciones</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">2. Cobrar un Pago</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">Ve a Agenda de Cobros</div>
+                <div class="step-description">Visualiza el calendario con todos los pagos del mes</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Haz clic en un cliente moroso</div>
+                <div class="step-description">Se abrirá el panel lateral con detalles de mora</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Presiona "Pagar"</div>
+                <div class="step-description">Te llevará a Registro de Cobros con datos pre-completados</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <div class="step-title">Ingresa monto y referencia</div>
+                <div class="step-description">La mora se calcula automáticamente</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <div class="step-title">Guarda el pago</div>
+                <div class="step-description">Sistema registra en Control de Cobros e Historial de Pagos</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-card success">
+          <div class="info-card-title">✅ ¡Éxito!</div>
+          <div class="info-card-text">
+            Si todo es correcto, verás una confirmación y el pago quedará registrado.
+            El cliente también desaparecerá de la lista de morosos en Agenda.
+          </div>
+        </div>
+      </section>
+
+      <!-- BIENVENIDA -->
+      <section id="bienvenida" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">🏠</div>
+          <div class="section-title">Panel de Bienvenida</div>
+          <div class="section-subtitle">Tu puerta de entrada al sistema</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Descripción General</div>
+          <div class="subsection-text">
+            El Panel de Bienvenida es la pantalla inicial de Control Terravia. Muestra la hora actual en Caracas,
+            la fecha, un saludo personalizado, y 7 botones de acceso rápido a las principales funciones del sistema.
+          </div>
+        </div>
+
+        <div class="screenshot">
+          <img src="/screenshots/bienvenida.png" alt="bienvenida" style="max-width: 100%; height: auto; border-radius: 0.5rem;">
+          <div class="screenshot-label">Pantalla de Bienvenida</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Componentes</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">🕐</div>
+              <div class="step-content">
+                <div class="step-title">Reloj en Vivo</div>
+                <div class="step-description">Hora en formato 12h (AM/PM) con zona horaria de Caracas, actualizado cada segundo</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📅</div>
+              <div class="step-content">
+                <div class="step-title">Fecha Completa</div>
+                <div class="step-description">Día de la semana, mes y año en español</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">😊</div>
+              <div class="step-content">
+                <div class="step-title">Saludo Personalizado</div>
+                <div class="step-description">Buenos días ☀️ / Buenas tardes 🌤️ / Buenas noches 🌙 según la hora</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">7️⃣</div>
+              <div class="step-content">
+                <div class="step-title">Botones de Acceso Rápido</div>
+                <div class="step-description">Tarjetas interactivas para navegar a cada función principal</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Opciones Disponibles</div>
+          <ol style="margin: 1.5rem 0; padding-left: 2rem;">
+            <li style="margin-bottom: 0.75rem;"><strong>📅 Agenda de Cobros</strong> - Calendario mensual interactivo</li>
+            <li style="margin-bottom: 0.75rem;"><strong>➕ Agregar Cliente</strong> - Registrar nuevo arrendatario</li>
+            <li style="margin-bottom: 0.75rem;"><strong>👥 Inquilinos</strong> - Directorio de arrendatarios</li>
+            <li style="margin-bottom: 0.75rem;"><strong>💰 Registro de Cobros</strong> - Ingresar pagos</li>
+            <li style="margin-bottom: 0.75rem;"><strong>💱 Tasas BCV</strong> - Control de tasas de cambio</li>
+            <li style="margin-bottom: 0.75rem;"><strong>📋 Historial de Cambios</strong> - Auditoría (🔒 Requiere PIN)</li>
+            <li style="margin-bottom: 0.75rem;"><strong>📊 Dashboard</strong> - Métricas administrativas (🔒 Requiere PIN)</li>
+          </ol>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">💡 Consejo</div>
+          <div class="info-card-text">
+            Al hacer clic en cualquier botón, se desplegará el menú lateral (Sidebar) con animación suave
+            y accederás a esa sección. Usa el botón "Volver al inicio" en el pie del Sidebar para regresar.
+          </div>
+        </div>
+
+        <div class="info-card warning">
+          <div class="info-card-title">⏰ Salvapantallas Automático</div>
+          <div class="info-card-text">
+            Si no hay actividad durante 10 minutos, el sistema regresará automáticamente al Panel de Bienvenida.
+          </div>
+        </div>
+      </section>
+
+      <!-- AGENDA DE COBROS -->
+      <section id="agenda" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">📅</div>
+          <div class="section-title">Agenda de Cobros</div>
+          <div class="section-subtitle">Calendario interactivo con estado de pagos</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Qué es la Agenda?</div>
+          <div class="subsection-text">
+            La Agenda de Cobros es un calendario mensual que te muestra todos los pagos esperados para el mes.
+            Cada día muestra qué clientes deben pagar, su estado (al día, moroso, pendiente, renovación)
+            y te permite hacer clic para obtener más detalles o proceder al pago.
+          </div>
+        </div>
+
+        <div class="screenshot">
+          <img src="/screenshots/agenda.png" alt="agenda" style="max-width: 100%; height: auto; border-radius: 0.5rem;">
+          <div class="screenshot-label">Vista del Calendario</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Cómo Usar</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">Navega el Calendario</div>
+                <div class="step-description">Usa las flechas para cambiar mes. Hoy está resaltado en naranja.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Observa el Color de los Días</div>
+                <div class="step-description">
+                  🔴 Rojo = Morosos | 🟢 Verde = Pagados | 🟡 Amarillo = Pendientes | 🔵 Azul = Renovación
+                </div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Haz Clic en un Día</div>
+                <div class="step-description">Se abrirá un panel lateral mostrando todos los clientes de ese día</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <div class="step-title">Selecciona un Cliente</div>
+                <div class="step-description">Se mostrará su mora acumulada y meses pendientes de pago</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <div class="step-title">Presiona "Pagar"</div>
+                <div class="step-description">Serás llevado a Registro de Cobros con datos pre-completados</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Filtros Disponibles</div>
+          <div class="subsection-text">
+            Usa los filtros en la parte superior para ver solo: Todos | Morosos | Al Día | Pendientes | Renovación
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">ℹ️ Nota Importante</div>
+          <div class="info-card-text">
+            Los clientes con status "Inactivo" o "Para Dar de Baja" NO aparecen en la Agenda.
+            Solo se muestran clientes activos (Vigentes).
+          </div>
+        </div>
+      </section>
+
+      <!-- REGISTRO DE COBROS -->
+      <section id="registro-cobros" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">💰</div>
+          <div class="section-title">Registro de Cobros</div>
+          <div class="section-subtitle">Ingreso y control de pagos</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Propósito</div>
+          <div class="subsection-text">
+            En Registro de Cobros ingresas los pagos que reciben los clientes. El sistema calcula automáticamente
+            la mora ($3 USD × días de retraso), verifica si hay alertas de desactivación, y registra todo en
+            Control de Cobros e Historial de Pagos.
+          </div>
+        </div>
+
+        <div class="screenshot">
+          <img src="/screenshots/registro-cobros.png" alt="registro-cobros" style="max-width: 100%; height: auto; border-radius: 0.5rem;">
+          <div class="screenshot-label">Formulario de Pago</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Paso a Paso</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">Selecciona el Cliente</div>
+                <div class="step-description">Busca en el dropdown. Solo muestra clientes activos.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Elige el Inmueble</div>
+                <div class="step-description">Se rellena automáticamente según el cliente seleccionado</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Ingresa el Monto Recibido</div>
+                <div class="step-description">En USD. La mora se calcula automáticamente.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <div class="step-title">Ingresa la Fecha del Pago</div>
+                <div class="step-description">Formato: DD/MM/AAAA. Se usa para calcular mora.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <div class="step-title">Referencia del Pago</div>
+                <div class="step-description">Número de transferencia, referencia Zelle, efectivo, etc.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">6</div>
+              <div class="step-content">
+                <div class="step-title">Selecciona Mes Cobro</div>
+                <div class="step-description">A qué mes corresponde este pago (Enero 2026, etc.)</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">7</div>
+              <div class="step-content">
+                <div class="step-title">Casilla "Sin Mora" (opcional)</div>
+                <div class="step-description">Marca si quieres eximir al cliente de la mora calculada</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">8</div>
+              <div class="step-content">
+                <div class="step-title">Presiona Guardar Pago</div>
+                <div class="step-description">Se registra en el sistema. Si hay alerta de desactivación, aparecerá.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-card warning">
+          <div class="info-card-title">⚠️ Alerta de Desactivación</div>
+          <div class="info-card-text">
+            Si un cliente acumula ≥ 2 meses sin pagar, el sistema mostrará una alerta.
+            Debes cambiar manualmente su status a "Para Dar de Baja" en el módulo de Inquilinos.
+          </div>
+        </div>
+      </section>
+
+      <!-- INQUILINOS -->
+      <section id="inquilinos" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">👥</div>
+          <div class="section-title">Directorio de Inquilinos</div>
+          <div class="section-subtitle">Gestión de clientes y sus detalles</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Qué es?</div>
+          <div class="subsection-text">
+            Es un directorio completo de todos los inquilinos/clientes del sistema.
+            Muestra su estado (Vigente, Moroso, Inactivo, etc.), información de contacto,
+            y permite ver detalles, editar datos, o cambiar status.
+          </div>
+        </div>
+
+        <div class="screenshot">
+          <img src="/screenshots/inquilinos.png" alt="inquilinos" style="max-width: 100%; height: auto; border-radius: 0.5rem;">
+          <div class="screenshot-label">Lista de Clientes</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Estados Visuales</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">🟢</div>
+              <div class="step-content">
+                <div class="step-title">Vigente</div>
+                <div class="step-description">Cliente activo, al día con pagos</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🟠</div>
+              <div class="step-content">
+                <div class="step-title">Moroso</div>
+                <div class="step-description">Tiene deuda pendiente</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🟡</div>
+              <div class="step-content">
+                <div class="step-title">Por Renovar</div>
+                <div class="step-description">Faltan ≤ 45 días para vencer contrato</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">⚫</div>
+              <div class="step-content">
+                <div class="step-title">Para Dar de Baja</div>
+                <div class="step-description">Marcado para desactivación (rojo), tachado</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">⚪</div>
+              <div class="step-content">
+                <div class="step-title">Inactivo</div>
+                <div class="step-description">Desactivado previamente, gris, tachado</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Acciones Disponibles</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">👁️</div>
+              <div class="step-content">
+                <div class="step-title">Ver Detalles</div>
+                <div class="step-description">Abre modal con información completa del cliente: canon, mora, contrato, etc.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">✏️</div>
+              <div class="step-content">
+                <div class="step-title">Editar</div>
+                <div class="step-description">Modifica datos del cliente (teléfono, correo, canon, etc.)</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🔄</div>
+              <div class="step-content">
+                <div class="step-title">Reactivar (si está Inactivo)</div>
+                <div class="step-description">Cambia status a Vigente</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">⏸️</div>
+              <div class="step-content">
+                <div class="step-title">Desactivar</div>
+                <div class="step-description">Cambia status a Inactivo. Cliente no aparecerá en cobros.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">ℹ️ Nota</div>
+          <div class="info-card-text">
+            Los clientes Inactivos o "Para Dar de Baja" no aparecen en Registro de Cobros ni en Agenda.
+            Debes reactivarlos manualmente si necesitas cobrarles nuevamente.
+          </div>
+        </div>
+      </section>
+
+      <!-- TASAS BCV -->
+      <section id="tasas" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">💱</div>
+          <div class="section-title">Tasas BCV</div>
+          <div class="section-subtitle">Control de tasas de cambio y conversión de monedas</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Las 4 Tasas</div>
+          <div class="subsection-text">
+            Control Terravia monitorea 4 tasas de cambio actualizadas diariamente a las 6 AM:
+          </div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">1️⃣</div>
+              <div class="step-content">
+                <div class="step-title">USDT Binance P2P</div>
+                <div class="step-description">Tasa de compra de USDT en Binance (VEF por USD)</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">2️⃣</div>
+              <div class="step-content">
+                <div class="step-title">BCV Oficial</div>
+                <div class="step-description">Tasa oficial del Banco Central de Venezuela</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">3️⃣</div>
+              <div class="step-content">
+                <div class="step-title">EUR</div>
+                <div class="step-description">Tasa EUR/VEF (Euros a Bolívares)</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">4️⃣</div>
+              <div class="step-content">
+                <div class="step-title">Promedio</div>
+                <div class="step-description">Promedio entre BCV Oficial y USDT Binance</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="screenshot">
+          <img src="/screenshots/tasas.png" alt="tasas" style="max-width: 100%; height: auto; border-radius: 0.5rem;">
+          <div class="screenshot-label">Vista de Tasas y Calculadora</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Calculadora Completa (4 Tabs)</div>
+          <div class="tab-buttons">
+            <button class="tab-button active">💵 → Bs.</button>
+            <button class="tab-button">Bs. → 💵</button>
+            <button class="tab-button">📊 Comparar</button>
+            <button class="tab-button">🔁 Bs. ↔ Bs.</button>
+          </div>
+
+          <div class="tab-content active">
+            <div class="subsection-title">Tab 1: Divisa → Bolívares</div>
+            <div class="subsection-text">
+              Ingresa un monto en USD o EUR y ve el resultado en Bs. con cada una de las 4 tasas.
+              Útil para ver cuántos bolívares equivalen a un canon en dólares.
+            </div>
+          </div>
+
+          <div class="tab-content">
+            <div class="subsection-title">Tab 2: Bolívares → Divisa</div>
+            <div class="subsection-text">
+              Ingresa un monto en Bs. y ve cuántos USD equivalen usando cada tasa.
+            </div>
+          </div>
+
+          <div class="tab-content">
+            <div class="subsection-title">Tab 3: Comparar Tasas</div>
+            <div class="subsection-text">
+              Ingresa USD y muestra una tabla comparativa con todas las tasas, mostrando
+              el diferencial (delta) vs Binance y el spread total en Bs. y porcentaje.
+            </div>
+          </div>
+
+          <div class="tab-content">
+            <div class="subsection-title">Tab 4: Bs. ↔ Bs. (Conversión Cruzada)</div>
+            <div class="subsection-text">
+              Selecciona dos tasas diferentes y convierte un monto de una tasa a otra.
+              Ejemplo: ¿Cuántos Bs. a tasa BCV equivalen a 5,000 Bs. a tasa USDT?
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">🔄 Actualización Automática</div>
+          <div class="info-card-text">
+            Las tasas se actualizan automáticamente cada día a las 6:00 AM desde Binance P2P
+            y OpenExchangeRates. Los canones en EUR se recalculan automáticamente.
+          </div>
+        </div>
+      </section>
+
+      <!-- DASHBOARD (ADMIN) -->
+      <section id="dashboard" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">📊</div>
+          <div class="section-title">Dashboard Administrativo</div>
+          <div class="section-subtitle">Métricas financieras en tiempo real (🔒 Requiere PIN)</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Acceso</div>
+          <div class="subsection-text">
+            El Dashboard está protegido con PIN. Una vez desbloqueado, permanece accesible
+            durante 20 minutos aunque cambies de sección. Si pasas 20 minutos fuera del Dashboard,
+            deberás ingresar el PIN nuevamente.
+          </div>
+        </div>
+
+        <div class="screenshot">
+          <img src="/screenshots/dashboard.png" alt="dashboard" style="max-width: 100%; height: auto; border-radius: 0.5rem;">
+          <div class="screenshot-label">Vista Principal del Dashboard</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Filtros</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">🏢</div>
+              <div class="step-content">
+                <div class="step-title">Inmueble</div>
+                <div class="step-description">Todos | Miko | Federación | La Candelaria</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📆</div>
+              <div class="step-content">
+                <div class="step-title">Período</div>
+                <div class="step-description">Hoy | Semana | Mes | Histórico</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Indicadores Principales (KPIs)</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">💰</div>
+              <div class="step-content">
+                <div class="step-title">Total Esperado</div>
+                <div class="step-description">Suma de cánones esperados en el período filtrado</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">✅</div>
+              <div class="step-content">
+                <div class="step-title">Total Cobrado</div>
+                <div class="step-description">Dinero realmente ingresado</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📉</div>
+              <div class="step-content">
+                <div class="step-title">Total Pendiente</div>
+                <div class="step-description">Esperado - Cobrado</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📊</div>
+              <div class="step-content">
+                <div class="step-title">Porcentaje de Cobro</div>
+                <div class="step-description">(Cobrado / Esperado) × 100</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">⚠️</div>
+              <div class="step-content">
+                <div class="step-title">Mora Acumulada</div>
+                <div class="step-description">Total de mora calculada en el período</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📈</div>
+              <div class="step-content">
+                <div class="step-title">Tasa de Morosidad</div>
+                <div class="step-description">Porcentaje de clientes con mora</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Gráficas</div>
+          <div class="subsection-text">
+            El Dashboard incluye dos gráficas visuales:
+          </div>
+          <ul style="margin: 1.5rem 0; padding-left: 2rem;">
+            <li style="margin-bottom: 0.75rem;"><strong>Gráfica Donut:</strong> Distribución de cobrado vs pendiente</li>
+            <li style="margin-bottom: 0.75rem;"><strong>Comparativa por Inmueble:</strong> Barras de esperado vs cobrado por cada propiedad</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Tablas Detalladas</div>
+          <div class="subsection-text">
+            Más abajo aparecen tablas con desglose por inmueble mostrando:
+            Esperado | Cobrado | Mora | Cantidad de Contratos
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">🔐 Sesión PIN de 20 Minutos</div>
+          <div class="info-card-text">
+            Mientras estés en el Dashboard, la sesión está activa.
+            Al salir, comienza una cuenta regresiva de 20 minutos.
+            Si regresas dentro de ese tiempo, NO pides PIN de nuevo.
+            Si pasan 20 minutos, se cierra la sesión y debes ingresar el PIN.
+          </div>
+        </div>
+      </section>
+
+      <!-- AGREGAR CLIENTE -->
+      <section id="agregar-cliente" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">➕</div>
+          <div class="section-title">Agregar Cliente</div>
+          <div class="section-subtitle">Registrar nuevo arrendatario en el sistema</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Propósito</div>
+          <div class="subsection-text">
+            Este formulario crea un nuevo contrato de arrendamiento en el sistema.
+            Todos los cálculos de canon en EUR, plan de contingencia, y depósito
+            se hacen automáticamente en función de los datos ingresados.
+          </div>
+        </div>
+
+        <div class="screenshot">
+          <img src="/screenshots/agregar-cliente.png" alt="agregar-cliente" style="max-width: 100%; height: auto; border-radius: 0.5rem;">
+          <div class="screenshot-label">Formulario de Nuevo Cliente</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Campos a Completar</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">🏢</div>
+              <div class="step-content">
+                <div class="step-title">Inmueble</div>
+                <div class="step-description">Selecciona: Miko, Federación, La Candelaria</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📍</div>
+              <div class="step-content">
+                <div class="step-title">Ubicación</div>
+                <div class="step-description">Piso, nivel, etc. (texto libre)</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🚪</div>
+              <div class="step-content">
+                <div class="step-title">Unidad</div>
+                <div class="step-description">Número de apartamento o casa (Ej: 1-A, 2-B)</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">👤</div>
+              <div class="step-content">
+                <div class="step-title">Datos Personales</div>
+                <div class="step-description">Nombre, cédula, RIF, teléfono, correo</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📅</div>
+              <div class="step-content">
+                <div class="step-title">Fechas del Contrato</div>
+                <div class="step-description">Inicio, vencimiento, duración en meses</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">💰</div>
+              <div class="step-content">
+                <div class="step-title">Canon Base USD</div>
+                <div class="step-description">Monto del alquiler mensual en dólares</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">💳</div>
+              <div class="step-content">
+                <div class="step-title">Método de Pago</div>
+                <div class="step-description">Zelle, Transferencia, Efectivo, etc.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🔄</div>
+              <div class="step-content">
+                <div class="step-title">Plan de Contingencia</div>
+                <div class="step-description">Monto adicional en USD + tipo (Mensual, Trimestral, etc.)</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🏦</div>
+              <div class="step-content">
+                <div class="step-title">Depósito en Garantía</div>
+                <div class="step-description">Total USD + cantidad de meses a dividir (máx 4)</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🅿️</div>
+              <div class="step-content">
+                <div class="step-title">Estacionamiento</div>
+                <div class="step-description">Sí / No</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-card success">
+          <div class="info-card-title">✨ Cálculos Automáticos</div>
+          <div class="info-card-text">
+            El sistema calcula automáticamente:
+            <ul style="margin-top: 0.75rem; margin-left: 1.5rem;">
+              <li>Canon Base EUR usando la tasa BCV actual</li>
+              <li>Cuota de Depósito (Total ÷ 4 para los primeros 4 pagos)</li>
+              <li>Canon Total USD/EUR</li>
+              <li>Fecha de Vencimiento</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDITAR CLIENTE -->
+      <section id="editar-cliente" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">✏️</div>
+          <div class="section-title">Editar Cliente</div>
+          <div class="section-subtitle">Modificar datos de un arrendatario existente</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Proceso</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">Busca el Cliente</div>
+                <div class="step-description">Por nombre en el dropdown. Filtra mientras escribes.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Se Cargan sus Datos</div>
+                <div class="step-description">El formulario se rellena con los datos actuales del cliente</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Modifica lo Necesario</div>
+                <div class="step-description">Puedes cambiar: teléfono, correo, canon, método de pago, etc.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <div class="step-title">Los Cálculos se Recalculan</div>
+                <div class="step-description">Canon EUR, total, etc. se actualizan automáticamente</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <div class="step-title">Guarda los Cambios</div>
+                <div class="step-description">Sistema actualiza Contratos y registra en Auditoría</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-card warning">
+          <div class="info-card-title">⚠️ BCV Recalculado</div>
+          <div class="info-card-text">
+            Al editar un cliente, si cambias el Canon USD, el sistema recalcula automáticamente
+            el Canon EUR usando la tasa BCV actual.
+          </div>
+        </div>
+      </section>
+
+      <!-- HISTORIAL DE CAMBIOS -->
+      <section id="historial" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">📋</div>
+          <div class="section-title">Historial de Cambios</div>
+          <div class="section-subtitle">Auditoría del sistema (🔒 Requiere PIN)</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Descripción</div>
+          <div class="subsection-text">
+            El Historial de Cambios es un registro inmutable de TODOS los cambios realizados en el sistema.
+            Muestra quién hizo qué, cuándo, y qué datos fueron modificados (antes y después).
+            Está protegido con PIN para evitar manipulaciones.
+          </div>
+        </div>
+
+        <div class="screenshot">
+          <img src="/screenshots/editar-cliente.png" alt="editar-cliente" style="max-width: 100%; height: auto; border-radius: 0.5rem;">
+          <div class="screenshot-label">Vista de Auditoría</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Información Registrada</div>
+          <ul class="step-list">
+            <li class="step-item">
+              <div class="step-number">👤</div>
+              <div class="step-content">
+                <div class="step-title">Usuario</div>
+                <div class="step-description">Email del usuario que hizo el cambio</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📅</div>
+              <div class="step-content">
+                <div class="step-title">Fecha y Hora</div>
+                <div class="step-description">Cuándo ocurrió exactamente el cambio</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🎯</div>
+              <div class="step-content">
+                <div class="step-title">Acción</div>
+                <div class="step-description">Tipo de operación (Pago Registrado, Cliente Agregado, etc.)</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📊</div>
+              <div class="step-content">
+                <div class="step-title">Tabla Afectada</div>
+                <div class="step-description">Contratos, Control de Cobros, Historial de Pagos, etc.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🔢</div>
+              <div class="step-content">
+                <div class="step-title">ID del Registro</div>
+                <div class="step-description">Cliente, número de contrato, etc.</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">📝</div>
+              <div class="step-content">
+                <div class="step-title">Campo Modificado</div>
+                <div class="step-description">Qué atributo cambió</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">🔄</div>
+              <div class="step-content">
+                <div class="step-title">Antes / Después</div>
+                <div class="step-description">Valor anterior vs valor nuevo</div>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-number">💬</div>
+              <div class="step-content">
+                <div class="step-title">Detalles Adicionales</div>
+                <div class="step-description">Información extra sobre la operación</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Cómo Acceder</div>
+          <div class="subsection-text">
+            Al hacer clic en "Historial de Cambios", se abre un modal de PIN.
+            Ingresa el PIN y presiona "Validar".
+            Una vez desbloqueado, la sesión persiste 20 minutos (como el Dashboard).
+            Aparecerá un botón "Cerrar Sesión" cuando quieras salir.
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">🔐 Protección PIN</div>
+          <div class="info-card-text">
+            El Historial está protegido porque es evidencia auditable.
+            20 minutos de sesión activa evita que olvides cerrar manualmente.
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">❓</div>
+          <div class="section-title">Preguntas Frecuentes</div>
+          <div class="section-subtitle">Respuestas a dudas comunes</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Cuál es el PIN del sistema?</div>
+          <div class="subsection-text">El PIN de acceso para acceder a Dashboard e Historial de Cambios.</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Qué pasa si paso 10 minutos sin actividad?</div>
+          <div class="subsection-text">
+            El sistema regresa automáticamente al Panel de Bienvenida (salvapantallas automático).
+            Cualquier clic, movimiento del mouse, o tecla reinicia el contador.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Cuánto dura la sesión PIN?</div>
+          <div class="subsection-text">
+            20 minutos. Mientras estés en Dashboard o Historial, no hay límite.
+            Al salir, comienza una cuenta regresiva de 20 minutos.
+            Si regresas dentro de ese tiempo, puedes entrar sin PIN.
+            Si pasan 20 minutos, debes ingresar el PIN de nuevo.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Cómo se calcula la mora?</div>
+          <div class="subsection-text">
+            <strong>Mora = $3 USD × días de retraso</strong>
+            <br><br>
+            Ejemplo: Si el cliente debía pagar el día 5, tiene 5 días de gracia (hasta día 10),
+            y pagó el día 13, entonces tiene 3 días de retraso = $3 × 3 = $9 de mora.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Qué significa "Para Dar de Baja"?</div>
+          <div class="subsection-text">
+            Es un status intermedio. El cliente tiene ≥ 2 meses sin pagar.
+            No aparecen en Agenda ni Registro de Cobros.
+            Se pueden reactivar manualmente desde Inquilinos o eliminar completamente.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Puedo editar el Canon después de crear el cliente?</div>
+          <div class="subsection-text">
+            Sí. Ve a Editar Cliente, busca al cliente, cambia el Canon USD,
+            y el sistema recalculará automáticamente el Canon EUR con la tasa BCV actual.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Dónde aparecen los clientes inactivos?</div>
+          <div class="subsection-text">
+            Los clientes Inactivos o "Para Dar de Baja" NO aparecen en:
+            <ul style="margin-top: 0.75rem; margin-left: 1.5rem;">
+              <li>Agenda de Cobros</li>
+              <li>Registro de Cobros</li>
+              <li>PagosPendientes</li>
+            </ul>
+            Solo aparecen en el Directorio de Inquilinos si miras la lista completa (con estado gris/tachado).
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">¿Cómo se calcula el Canon en EUR?</div>
+          <div class="subsection-text">
+            <strong>Canon EUR = CEILING(Canon USD × Tasa USDT / Tasa EUR) a múltiplo de 5</strong>
+            <br><br>
+            Ejemplo: $160 USD × 36.50 = 5,840 VEF ÷ 39.10 (EUR) = €149.36 → redondea a €150
+          </div>
+        </div>
+      </section>
+
+      <!-- SOLUCIÓN DE PROBLEMAS -->
+      <section id="troubleshoot" class="content-section">
+        <div class="section-header">
+          <div class="section-icon">🔧</div>
+          <div class="section-title">Solución de Problemas</div>
+          <div class="section-subtitle">Errores comunes y cómo resolverlos</div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Problema: "PIN Incorrecto"</div>
+          <div class="subsection-text">
+            <strong>Solución:</strong> Verifica que ingreses el PIN correcto.
+            Sin espacios ni caracteres adicionales.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Problema: Mi sesión de Dashboard expiró</div>
+          <div class="subsection-text">
+            <strong>Solución:</strong> Saliste del Dashboard hace más de 20 minutos.
+            Abre nuevamente Dashboard e ingresa el PIN.
+            Si accedes frecuentemente, considera no cerrar la pestaña del Dashboard.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Problema: El cliente no aparece en Registro de Cobros</div>
+          <div class="subsection-text">
+            <strong>Posibles causas:</strong>
+            <ul style="margin-top: 0.75rem; margin-left: 1.5rem;">
+              <li>Status = Inactivo o Para Dar de Baja</li>
+              <li>No está registrado correctamente</li>
+            </ul>
+            <strong>Solución:</strong> Ve a Inquilinos, verifica su status, y reactívalo si es necesario.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Problema: Las tasas no se actualiza</div>
+          <div class="subsection-text">
+            <strong>Solución:</strong> Las tasas se actualizan automáticamente a las 6:00 AM todos los días.
+            Si necesitas forzar una actualización, recarga la página o contacta al administrador.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Problema: No veo el desglose por inmueble en Dashboard</div>
+          <div class="subsection-text">
+            <strong>Solución:</strong> Verifica que existan contratos Vigentes para ese inmueble.
+            Si hace poco agregaste un cliente, puede tardar en reflejarse. Recarga la página.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Problema: Olvidé la contraseña</div>
+          <div class="subsection-text">
+            <strong>Nota:</strong> Control Terravia usa un PIN de seguridad, no contraseñas de usuario.
+            Si olvidaste el PIN, contacta al administrador del sistema.
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title">Problema: El pago no se guardó</div>
+          <div class="subsection-text">
+            <strong>Posibles causas:</strong>
+            <ul style="margin-top: 0.75rem; margin-left: 1.5rem;">
+              <li>Faltó seleccionar cliente o inmueble</li>
+              <li>El monto está vacío o en formato incorrecto</li>
+              <li>Error de conexión al servidor</li>
+            </ul>
+            <strong>Solución:</strong> Verifica todos los campos, asegúrate de tener conexión a internet,
+            e intenta nuevamente. Si el error persiste, recarga la página.
+          </div>
+        </div>
+
+        <div class="info-card warning">
+          <div class="info-card-title">⚠️ Importante</div>
+          <div class="info-card-text">
+            Si experimentas un error recurrente o algo no funciona como se describe en este manual,
+            captura una pantalla y reporta al administrador del sistema.
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    function switchSection(sectionId) {
+      // Oculta todas las secciones
+      const sections = document.querySelectorAll('.content-section');
+      sections.forEach(s => s.classList.remove('active'));
+
+      // Muestra la sección seleccionada
+      document.getElementById(sectionId).classList.add('active');
+
+      // Actualiza nav items
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => item.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Scroll al inicio del contenido
+      document.querySelector('.main').scrollTop = 0;
+    }
+
+    // Manejo de tabs en Tasas BCV
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        tabContents[idx].classList.add('active');
+      });
+    });
+
+    // Inicializar primer nav item como activo
+    document.querySelector('.nav-item').classList.add('active');
+  </script>
+</body>
+</html>

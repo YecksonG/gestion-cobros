@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS — Sistema de colores Control Terravia
+   ─────────────────────────────────────────────────────────────────────────
+   Uso:
+     • terra-*    → identidad de marca (dorado / navy). NO usar como semántico.
+     • status-*   → feedback funcional (success/warning/danger/info/expiring).
+     • estate-*   → identificador de inmueble (no decoración).
+   Regla: marca para superficies y branding; status para datos del usuario.
+   ═════════════════════════════════════════════════════════════════════════ */
+@theme {
+  /* — Marca (dorado / cobre) — */
+  --color-terra-gold:        #d4a373;   /* primario       */
+  --color-terra-gold-light:  #ffd699;   /* hover / acento */
+  --color-terra-gold-soft:   #e8b88a;   /* sutil          */
+  --color-terra-copper:      #995a37;   /* secundario     */
+  --color-terra-copper-dark: #7a4629;   /* presionado     */
+  --color-terra-cream:       #faf3e8;   /* fondo cálido   */
+  --color-terra-cream-mid:   #f5e6d0;   /* fondo cálido + */
+
+  /* — Marca (navy oscuros) — */
+  --color-terra-navy:        #1e2631;
+  --color-terra-navy-mid:    #1a2236;
+  --color-terra-navy-deep:   #12181f;
+
+  /* — Status semánticos (intocables: universales) — */
+  --color-status-success:    #16a34a;   /* verde-600 */
+  --color-status-warning:    #ea580c;   /* naranja-600 */
+  --color-status-danger:     #dc2626;   /* rojo-600 */
+  --color-status-info:       #2563eb;   /* azul-600 */
+  --color-status-expiring:   #ca8a04;   /* amarillo-600 */
+
+  /* — Identificadores de inmueble — */
+  --color-estate-federacion: #2563eb;   /* azul */
+  --color-estate-candelaria: #059669;   /* esmeralda */
+  --color-estate-miko:       #7c3aed;   /* violeta */
+}
+
+/* ── Sidebar: desliza desde la izquierda al montar ── */
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+/* ── Contenido principal: aparece desde la derecha ── */
+@keyframes fadeInRight {
+  from { transform: translateX(18px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* ── Cards de bienvenida: aparecen con pop ── */
+@keyframes cardPop {
+  from { transform: translateY(16px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+/* ── Encabezado bienvenida ── */
+@keyframes fadeInDown {
+  from { transform: translateY(-14px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.sidebar-enter {
+  animation: slideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.content-enter {
+  animation: fadeInRight 0.4s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.card-pop {
+  animation: cardPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.welcome-header {
+  animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.welcome-footer {
+  animation: fadeInDown 0.6s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Hide number input spinners (evita cambios accidentales al scrollear) ── */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ── Modo impresión (reportes legales) ── */
+@media print {
+  @page {
+    size: A4;
+    margin: 1.5cm;
+  }
+  /* Ocultar layout: sidebar, header de página, footer global */
+  aside, header, .print\:hidden {
+    display: none !important;
+  }
+  /* Fondo blanco, sin sombras */
+  body, html, main {
+    background: white !important;
+  }
+  .bg-white, .bg-gray-50, .bg-amber-50, .bg-red-50, .bg-orange-50, .bg-green-50, .bg-blue-50 {
+    background: white !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+  }
+  /* Evitar cortes feos en secciones */
+  .print\:break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
