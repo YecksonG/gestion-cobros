@@ -467,14 +467,6 @@ function ModalExpediente({ inquilino, onClose }) {
               ⚖️ Caso abierto
             </span>
           )}
-          {detalle?.totalMesesPendientes > 0 && (
-            <button
-              onClick={irACobros}
-              className="flex-1 py-2.5 bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white rounded-xl text-sm font-semibold hover:from-terra-copper-dark hover:to-[#6a3a22] transition-all shadow-sm"
-            >
-              💰 Registrar Pago
-            </button>
-          )}
         </div>
       </div>
     </div>
@@ -791,12 +783,6 @@ function ModalGestionCaso({ caso, onClose, onActualizado }) {
             className="flex-1 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors"
           >
             Cancelar
-          </button>
-          <button
-            onClick={() => { onClose(); navigate('/cobros', { state: { cliente: caso.inquilino, inmueble: caso.inmueble } }); }}
-            className="px-4 py-2.5 border border-terra-copper text-terra-copper rounded-xl text-sm font-medium hover:bg-terra-copper/5 transition-colors"
-          >
-            💰 Ir a Cobros
           </button>
           <button
             onClick={guardar}
