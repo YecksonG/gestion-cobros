@@ -96,7 +96,7 @@ function TabExpedientes() {
     try {
       const res = await axios.get(`${GAS_SCRIPT_URL}?action=getInquilinos`);
       const datos = Array.isArray(res.data) ? res.data : [];
-      setInquilinos(datos.filter(i => i.status !== 'Inactivo'));
+      setInquilinos(datos.filter(i => i.nombre && i.nombre.trim() !== '' && i.status !== 'Inactivo'));
     } catch {
       toast.error('❌ Error al cargar inquilinos');
     } finally {
@@ -1302,7 +1302,7 @@ function TabArchivoDigital() {
         axios.get(`${GAS_SCRIPT_URL}?action=getResumenArchivosLegal`)
       ]);
       const datos = Array.isArray(inqRes.data) ? inqRes.data : [];
-      setInquilinos(datos.filter(i => i.status !== 'Inactivo'));
+      setInquilinos(datos.filter(i => i.nombre && i.nombre.trim() !== '' && i.status !== 'Inactivo'));
 
       if (resRes.data?.success) {
         setResumen(resRes.data.resumen || {});
@@ -1642,7 +1642,7 @@ function TabReportes() {
         axios.get(`${GAS_SCRIPT_URL}?action=getCasosLegales`),
         axios.get(`${GAS_SCRIPT_URL}?action=getComunicacionesLegales`)
       ]);
-      setInquilinos((Array.isArray(inqRes.data) ? inqRes.data : []).filter(i => i.status !== 'Inactivo'));
+      setInquilinos((Array.isArray(inqRes.data) ? inqRes.data : []).filter(i => i.nombre && i.nombre.trim() !== '' && i.status !== 'Inactivo'));
       setCasos(casosRes.data?.casos || []);
       setComunicaciones(comRes.data?.entradas || []);
     } catch {
