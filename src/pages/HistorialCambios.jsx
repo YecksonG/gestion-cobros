@@ -23,10 +23,10 @@ function HistorialCambios() {
   const [pestanaActiva, setPestanaActiva] = useState('cambios'); // 'cambios' | 'pagos' | 'bugs'
   const [pagos, setPagos] = useState([]);
   const [cargandoPagos, setCargandoPagos] = useState(false);
-  const [mostrarModalEliminarPago, setMostrarModalEliminarPago] = useState(false);
-  const [pagoAEliminar, setPagoAEliminar] = useState(null);
-  const [pinEliminarPago, setPinEliminarPago] = useState('');
-  const [eliminandoPago, setEliminandoPago] = useState(false);
+  const [mostrarModalDeshabilitarPago, setMostrarModalDeshabilitarPago] = useState(false);
+  const [pagoADeshabilitar, setPagoADeshabilitar] = useState(null);
+  const [pinDeshabilitarPago, setPinDeshabilitarPago] = useState('');
+  const [deshabilitandoPago, setDeshabilitandoPago] = useState(false);
   const [bugs, setBugs] = useState([]);
   const [cargandoBugs, setCargandoBugs] = useState(false);
 
@@ -149,40 +149,40 @@ function HistorialCambios() {
   };
 
   // ════════════════════════════════════════════════════════════════════════
-  // 1.7 ELIMINAR PAGO INDIVIDUAL
+  // 1.7 DESHABILITAR PAGO INDIVIDUAL (soft-disable, el registro permanece)
   // ════════════════════════════════════════════════════════════════════════
 
-  const eliminarPago = async () => {
-    if (!pinEliminarPago.trim()) {
+  const deshabilitarPago = async () => {
+    if (!pinDeshabilitarPago.trim()) {
       toast.error('PIN requerido');
       return;
     }
 
-    setEliminandoPago(true);
+    setDeshabilitandoPago(true);
     try {
       const response = await axios.post(GAS_SCRIPT_URL, JSON.stringify({
-        action: 'eliminarPagoIndividual',
-        pin: pinEliminarPago,
-        fila: pagoAEliminar.fila
+        action: 'deshabilitarPago',
+        pin: pinDeshabilitarPago,
+        fila: pagoADeshabilitar.fila
       }), {
         headers: { 'Content-Type': 'text/plain;charset=utf-8' }
       });
 
       if (response.data.success) {
         toast.success(`✅ ${response.data.message}`);
-        setPinEliminarPago('');
-        setMostrarModalEliminarPago(false);
-        setPagoAEliminar(null);
-        cargarPagos(); // Recargar lista
-        cargarHistorial(); // Recargar auditoría
+        setPinDeshabilitarPago('');
+        setMostrarModalDeshabilitarPago(false);
+        setPagoADeshabilitar(null);
+        cargarPagos();
+        cargarHistorial();
       } else {
-        toast.error(`❌ ${response.data.error || 'Error al eliminar'}`);
+        toast.error(`❌ ${response.data.error || 'Error al deshabilitar'}`);
       }
     } catch (error) {
       console.error(error);
       toast.error('Error al conectar con el servidor');
     } finally {
-      setEliminandoPago(false);
+      setDeshabilitandoPago(false);
     }
   };
 
@@ -673,23 +673,29 @@ function HistorialCambios() {
               </thead>
               <tbody>
                 {pagos.map((pago, idx) => (
-                  <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50 transition">
-                    <td className="px-6 py-4 text-gray-900 font-medium">{pago.fecha}</td>
-                    <td className="px-6 py-4 text-gray-700">{pago.cliente}</td>
-                    <td className="px-6 py-4 text-gray-700">{pago.inmueble}</td>
-                    <td className="px-6 py-4 text-gray-700 font-mono text-xs">{pago.referencia || '-'}</td>
-                    <td className="px-6 py-4 text-right font-bold text-green-600">${pago.montoUSD.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-gray-700 text-xs truncate">{pago.gestor || 'N/A'}</td>
+                  <tr key={idx} className={`border-b border-gray-100 transition ${pago.anulado ? 'bg-gray-50 opacity-60' : 'hover:bg-gray-50'}`}>
+                    <td className={`px-6 py-4 font-medium ${pago.anulado ? 'text-gray-400 line-through' : 'text-gray-900'}`}>{pago.fecha}</td>
+                    <td className={`px-6 py-4 ${pago.anulado ? 'text-gray-400 line-through' : 'text-gray-700'}`}>{pago.cliente}</td>
+                    <td className={`px-6 py-4 ${pago.anulado ? 'text-gray-400' : 'text-gray-700'}`}>{pago.inmueble}</td>
+                    <td className={`px-6 py-4 font-mono text-xs ${pago.anulado ? 'text-gray-400' : 'text-gray-700'}`}>{pago.referencia || '-'}</td>
+                    <td className={`px-6 py-4 text-right font-bold ${pago.anulado ? 'text-gray-400 line-through' : 'text-green-600'}`}>${pago.montoUSD.toFixed(2)}</td>
+                    <td className="px-6 py-4 text-gray-500 text-xs truncate">{pago.gestor || 'N/A'}</td>
                     <td className="px-6 py-4 text-center">
-                      <button
-                        onClick={() => {
-                          setPagoAEliminar(pago);
-                          setMostrarModalEliminarPago(true);
-                        }}
-                        className="px-3 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 transition font-semibold text-xs"
-                      >
-                        🗑️ Eliminar
-                      </button>
+                      {pago.anulado ? (
+                        <span className="px-3 py-1 bg-gray-100 text-gray-500 rounded font-semibold text-xs">
+                          ⛔ Anulado
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            setPagoADeshabilitar(pago);
+                            setMostrarModalDeshabilitarPago(true);
+                          }}
+                          className="px-3 py-1 bg-orange-100 text-orange-700 rounded hover:bg-orange-200 transition font-semibold text-xs"
+                        >
+                          ⛔ Deshabilitar
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -876,21 +882,27 @@ function HistorialCambios() {
         </div>
       )}
 
-      {/* MODAL: ELIMINAR PAGO INDIVIDUAL */}
-      {mostrarModalEliminarPago && pagoAEliminar && (
+      {/* MODAL: DESHABILITAR PAGO INDIVIDUAL */}
+      {mostrarModalDeshabilitarPago && pagoADeshabilitar && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-8">
             <div className="text-center mb-6">
-              <div className="text-5xl mb-3">⚠️</div>
-              <h2 className="text-2xl font-bold text-gray-900">Eliminar Pago Individual</h2>
-              <p className="text-sm text-gray-600 mt-2">Esta acción es irreversible</p>
+              <div className="text-5xl mb-3">⛔</div>
+              <h2 className="text-2xl font-bold text-gray-900">Deshabilitar Pago</h2>
+              <p className="text-sm text-gray-600 mt-2">El registro permanecerá visible pero sin efecto financiero</p>
             </div>
 
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 space-y-2">
-              <p className="text-sm text-gray-700"><strong>Cliente:</strong> {pagoAEliminar.cliente}</p>
-              <p className="text-sm text-gray-700"><strong>Fecha:</strong> {pagoAEliminar.fecha}</p>
-              <p className="text-sm text-gray-700"><strong>Monto:</strong> ${pagoAEliminar.montoUSD.toFixed(2)} USD</p>
-              <p className="text-sm text-gray-700"><strong>Inmueble:</strong> {pagoAEliminar.inmueble}</p>
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4 space-y-2">
+              <p className="text-sm text-gray-700"><strong>Cliente:</strong> {pagoADeshabilitar.cliente}</p>
+              <p className="text-sm text-gray-700"><strong>Fecha:</strong> {pagoADeshabilitar.fecha}</p>
+              <p className="text-sm text-gray-700"><strong>Monto:</strong> ${pagoADeshabilitar.montoUSD.toFixed(2)} USD</p>
+              <p className="text-sm text-gray-700"><strong>Inmueble:</strong> {pagoADeshabilitar.inmueble}</p>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6">
+              <p className="text-xs text-blue-800">
+                ℹ️ Al deshabilitar, el mes correspondiente volverá a aparecer como pendiente. El registro queda en el historial marcado como "Anulado".
+              </p>
             </div>
 
             <div className="mb-6">
@@ -901,40 +913,40 @@ function HistorialCambios() {
                 type="password"
                 placeholder="••••"
                 maxLength="6"
-                value={pinEliminarPago}
-                onChange={(e) => setPinEliminarPago(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && !eliminandoPago && eliminarPago()}
-                disabled={eliminandoPago}
+                value={pinDeshabilitarPago}
+                onChange={(e) => setPinDeshabilitarPago(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && !deshabilitandoPago && deshabilitarPago()}
+                disabled={deshabilitandoPago}
                 autoFocus
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-center text-xl font-bold tracking-widest focus:outline-none focus:border-red-600 disabled:bg-gray-100"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-center text-xl font-bold tracking-widest focus:outline-none focus:border-orange-500 disabled:bg-gray-100"
               />
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={() => {
-                  setMostrarModalEliminarPago(false);
-                  setPinEliminarPago('');
-                  setPagoAEliminar(null);
+                  setMostrarModalDeshabilitarPago(false);
+                  setPinDeshabilitarPago('');
+                  setPagoADeshabilitar(null);
                 }}
-                disabled={eliminandoPago}
+                disabled={deshabilitandoPago}
                 className="flex-1 px-4 py-3 bg-gray-200 text-gray-800 rounded-lg font-semibold hover:bg-gray-300 transition disabled:opacity-50"
               >
                 ✕ Cancelar
               </button>
               <button
-                onClick={eliminarPago}
-                disabled={eliminandoPago || !pinEliminarPago.trim()}
-                className="flex-1 px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                onClick={deshabilitarPago}
+                disabled={deshabilitandoPago || !pinDeshabilitarPago.trim()}
+                className="flex-1 px-4 py-3 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                {eliminandoPago ? (
+                {deshabilitandoPago ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Eliminando...
+                    Procesando...
                   </>
                 ) : (
                   <>
-                    🗑️ Eliminar Pago
+                    ⛔ Deshabilitar Pago
                   </>
                 )}
               </button>
