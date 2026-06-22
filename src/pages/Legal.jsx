@@ -761,6 +761,11 @@ function ModalGestionCaso({ caso, onClose, onActualizado }) {
                 </button>
               ))}
             </div>
+            {nuevoEstado === 'En Gestión' && caso.estado !== 'En Gestión' && (
+              <p className="mt-2 text-xs text-orange-700 bg-orange-50 border border-orange-200 rounded-lg px-3 py-2">
+                ⚠️ Para marcar "En Gestión" debes haber registrado al menos una comunicación en la bitácora del caso.
+              </p>
+            )}
           </div>
 
           {/* Notas */}
