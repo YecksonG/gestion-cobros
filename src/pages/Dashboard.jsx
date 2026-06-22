@@ -64,13 +64,13 @@ function Dashboard() {
 
       {/* Filtros */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-        <div className="flex gap-6 flex-wrap items-center">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 sm:items-center">
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase mb-1">🏢 Inmueble</label>
             <select
               value={inmueble}
               onChange={(e) => setInmueble(e.target.value)}
-              className="px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-terra-copper focus:border-transparent outline-none bg-white text-sm"
+              className="w-full sm:w-auto px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-terra-copper focus:border-transparent outline-none bg-white text-sm"
             >
               {INMUEBLES.map(i => <option key={i} value={i}>{i}</option>)}
             </select>
@@ -80,7 +80,7 @@ function Dashboard() {
             <select
               value={periodo}
               onChange={(e) => setPeriodo(e.target.value)}
-              className="px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-terra-copper focus:border-transparent outline-none bg-white text-sm"
+              className="w-full sm:w-auto px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-terra-copper focus:border-transparent outline-none bg-white text-sm"
             >
               {PERIODOS.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
             </select>

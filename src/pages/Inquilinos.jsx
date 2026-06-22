@@ -32,11 +32,14 @@ function FilaInquilino({ inq, onVerDetalle, onEditar }) {
   const esParaBaja  = inq.status === 'Para Dar de Baja';
 
   return (
-    <tr className={`transition-colors text-sm ${
-      esInactivo  ? 'bg-gray-50 opacity-60' :
-      esParaBaja  ? 'bg-red-50'             :
-      'hover:bg-gray-50'
-    }`}>
+    <tr
+      onClick={() => onVerDetalle(inq)}
+      className={`transition-colors text-sm cursor-pointer ${
+        esInactivo  ? 'bg-gray-50 opacity-60' :
+        esParaBaja  ? 'bg-red-50'             :
+        'hover:bg-gray-50'
+      }`}
+    >
       <td className="px-4 py-3">
         <div className="flex items-center flex-wrap gap-1.5">
           <span className={`font-medium ${esInactivo ? 'text-gray-400 line-through' : 'text-gray-900'}`}>
@@ -72,19 +75,19 @@ function FilaInquilino({ inq, onVerDetalle, onEditar }) {
           )}
         </div>
       </td>
-      <td className={`px-4 py-3 ${esInactivo ? 'text-gray-400' : 'text-gray-600'}`}>{inq.cedula}</td>
-      <td className={`px-4 py-3 ${esInactivo ? 'text-gray-400' : 'text-gray-600'}`}>{inq.telefono}</td>
-      <td className={`px-4 py-3 text-xs ${esInactivo ? 'text-gray-400' : 'text-gray-500'}`}>{inq.unidad}</td>
-      <td className="px-4 py-3 text-center">
+      <td className={`px-4 py-3 hidden sm:table-cell ${esInactivo ? 'text-gray-400' : 'text-gray-600'}`}>{inq.cedula}</td>
+      <td className={`px-4 py-3 hidden sm:table-cell ${esInactivo ? 'text-gray-400' : 'text-gray-600'}`}>{inq.telefono}</td>
+      <td className={`px-4 py-3 text-xs hidden sm:table-cell ${esInactivo ? 'text-gray-400' : 'text-gray-500'}`}>{inq.unidad}</td>
+      <td className="px-4 py-3 text-center" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={() => onVerDetalle(inq)}
-          className="text-blue-600 hover:text-blue-800 font-medium text-xs transition-colors border border-transparent hover:border-blue-200 px-2.5 py-1 rounded mr-1"
+          className="hidden sm:inline-flex text-blue-600 hover:text-blue-800 font-medium text-xs transition-colors border border-transparent hover:border-blue-200 px-2.5 py-1 rounded mr-1"
         >
           👁️ Ver
         </button>
         <button
           onClick={() => onEditar(inq)}
-          className="text-terra-copper hover:text-orange-700 font-medium text-xs transition-colors border border-transparent hover:border-orange-200 px-2.5 py-1 rounded"
+          className="hidden sm:inline-flex text-terra-copper hover:text-orange-700 font-medium text-xs transition-colors border border-transparent hover:border-orange-200 px-2.5 py-1 rounded"
         >
           ✏️ Editar
         </button>
@@ -140,9 +143,9 @@ function SeccionInmueble({ inmueble, clientes, abierto, onToggle, onVerDetalle, 
             <thead>
               <tr className="bg-white text-gray-400 text-xs uppercase tracking-wider border-b border-gray-100">
                 <th className="px-4 py-2.5 font-semibold">Arrendatario</th>
-                <th className="px-4 py-2.5 font-semibold">Cédula</th>
-                <th className="px-4 py-2.5 font-semibold">Teléfono</th>
-                <th className="px-4 py-2.5 font-semibold">Unidad</th>
+                <th className="px-4 py-2.5 font-semibold hidden sm:table-cell">Cédula</th>
+                <th className="px-4 py-2.5 font-semibold hidden sm:table-cell">Teléfono</th>
+                <th className="px-4 py-2.5 font-semibold hidden sm:table-cell">Unidad</th>
                 <th className="px-4 py-2.5 font-semibold text-center">Opciones</th>
               </tr>
             </thead>

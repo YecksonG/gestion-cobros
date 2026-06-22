@@ -150,7 +150,8 @@ function Usuarios() {
 
       {/* TABLA DE USUARIOS */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[600px]">
           <thead>
             <tr className="bg-gradient-to-r from-terra-cream to-terra-cream-mid border-b border-terra-gold/20">
               <th className="text-left p-4 text-[11px] font-bold text-terra-copper-dark uppercase tracking-wider">Usuario</th>
@@ -228,6 +229,7 @@ function Usuarios() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* MODALES */}

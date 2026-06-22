@@ -221,21 +221,21 @@ function AgendaCobros() {
               <h1 className="text-2xl font-bold">📅 Agenda de Cobros</h1>
               <p className="text-sm opacity-90 mt-1">Visualiza y gestiona los cobros del mes</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 flex-wrap">
               <button
                 onClick={() => setCurrentDate(d => { const n = new Date(d); n.setMonth(n.getMonth() - 1); return n; })}
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-semibold transition"
+                className="px-3 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-semibold transition"
               >◀</button>
-              <div className="px-5 py-2 bg-white/10 rounded-lg font-bold text-lg min-w-[180px] text-center">
+              <div className="px-3 py-2 bg-white/10 rounded-lg font-bold text-base min-w-[130px] text-center">
                 {MESES[month]} {year}
               </div>
               <button
                 onClick={() => setCurrentDate(d => { const n = new Date(d); n.setMonth(n.getMonth() + 1); return n; })}
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-semibold transition"
+                className="px-3 py-2 bg-white/20 hover:bg-white/30 rounded-lg font-semibold transition"
               >▶</button>
               <button
                 onClick={() => setCurrentDate(new Date())}
-                className="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg font-semibold transition"
+                className="px-3 py-2 bg-green-500 hover:bg-green-600 rounded-lg font-semibold transition"
               >Hoy</button>
             </div>
           </div>
@@ -284,7 +284,7 @@ function AgendaCobros() {
               {celdas.map((celda, idx) => {
                 if (celda.otroMes) {
                   return (
-                    <div key={idx} className="bg-gray-50 min-h-[100px] p-2">
+                    <div key={idx} className="bg-gray-50 min-h-[60px] sm:min-h-[100px] p-1 sm:p-2">
                       <span className="text-xs text-gray-300 font-medium">{celda.dia}</span>
                     </div>
                   );
@@ -309,7 +309,7 @@ function AgendaCobros() {
                     key={idx}
                     onClick={() => hayEventos && abrirPanelDia(key)}
                     className={[
-                      'min-h-[110px] p-2 relative',
+                      'min-h-[60px] sm:min-h-[110px] p-1 sm:p-2 relative',
                       'transition-all duration-200',
                       hayEventos
                         ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:z-10'
@@ -351,10 +351,10 @@ function AgendaCobros() {
                         return (
                           <div
                             key={i}
-                            className={`flex items-center gap-1 px-1.5 py-0.5 rounded-md text-xs font-medium ${cfg.badge} truncate transition-transform duration-150 hover:scale-[1.03]`}
+                            className={`flex items-center gap-0.5 px-1 py-0.5 rounded-md text-[10px] sm:text-xs font-medium ${cfg.badge} truncate transition-transform duration-150 hover:scale-[1.03]`}
                           >
-                            <span>{cfg.icon}</span>
-                            <span className="truncate">{evt.unidad || evt.nombre}</span>
+                            <span className="flex-shrink-0">{cfg.icon}</span>
+                            <span className="truncate hidden sm:block">{evt.unidad || evt.nombre}</span>
                           </div>
                         );
                       })}

@@ -72,19 +72,19 @@ function TasasMonitor() {
       {/* ── HEADER ── */}
       <div className="relative bg-gradient-to-r from-terra-copper to-terra-navy rounded-2xl p-6 text-white overflow-hidden shadow-lg">
         <div className="absolute top-0 right-0 w-64 h-full bg-terra-gold/10 blur-2xl rounded-full" />
-        <div className="relative z-10 flex items-start justify-between gap-4">
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div>
             <p className="text-[11px] font-bold uppercase tracking-widest text-white/60 mb-1">Monitor</p>
             <h1 className="text-2xl font-black tracking-tight">Tasas BCV</h1>
             <p className="text-sm text-white/70 mt-1">Binance P2P + BCV Oficial · Auto-actualiza cada 30 min</p>
           </div>
-          <div className="flex gap-2 flex-shrink-0">
+          <div className="flex gap-2 flex-wrap sm:flex-nowrap sm:flex-shrink-0">
             <button onClick={cargarTasas} disabled={cargando}
-              className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-xl font-semibold text-xs transition flex items-center gap-1.5 border border-white/20 disabled:opacity-50">
+              className="flex-1 sm:flex-none bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-xl font-semibold text-xs transition flex items-center justify-center gap-1.5 border border-white/20 disabled:opacity-50">
               ↻ Recargar
             </button>
             <button onClick={actualizarTasas} disabled={actualizando || cargando}
-              className="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-xl font-semibold text-xs transition flex items-center gap-1.5 border border-white/20 disabled:opacity-50">
+              className="flex-1 sm:flex-none bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-xl font-semibold text-xs transition flex items-center justify-center gap-1.5 border border-white/20 disabled:opacity-50">
               {actualizando ? '⏳ Actualizando...' : '🔄 Actualizar desde Binance'}
             </button>
           </div>
@@ -261,10 +261,10 @@ function Calculadora({ tasas }) {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-gray-100">
+      <div className="flex border-b border-gray-100 overflow-x-auto">
         {TABS.map(t => (
           <button key={t.id} onClick={() => { setTab(t.id); setMonto(''); }}
-            className={`flex-1 py-3 text-xs font-bold transition-colors ${tab === t.id
+            className={`flex-1 min-w-[80px] py-3 text-xs font-bold transition-colors whitespace-nowrap ${tab === t.id
               ? 'bg-terra-navy text-white'
               : 'text-gray-500 hover:bg-gray-50 hover:text-gray-800'}`}>
             {t.label}

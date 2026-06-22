@@ -192,9 +192,9 @@ function TabExpedientes() {
             <thead>
               <tr className="bg-gradient-to-r from-terra-cream to-terra-cream-mid text-left text-xs font-bold text-terra-copper-dark uppercase tracking-wider">
                 <th className="px-4 py-3">Inquilino</th>
-                <th className="px-4 py-3">Inmueble</th>
+                <th className="px-4 py-3 hidden sm:table-cell">Inmueble</th>
                 <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3 text-center">Meses sin pagar</th>
+                <th className="px-4 py-3 text-center hidden sm:table-cell">Meses sin pagar</th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
@@ -248,12 +248,15 @@ function FilaExpediente({ inq, onVerExpediente }) {
     : '';
 
   return (
-    <tr className={`hover:bg-terra-cream/30 transition-colors ${nivelRiesgo}`}>
+    <tr
+      onClick={onVerExpediente}
+      className={`hover:bg-terra-cream/30 transition-colors cursor-pointer ${nivelRiesgo}`}
+    >
       <td className="px-4 py-3">
         <p className="font-medium text-gray-800">{inq.nombre}</p>
         <p className="text-xs text-gray-400">{inq.cedula}</p>
       </td>
-      <td className="px-4 py-3">
+      <td className="px-4 py-3 hidden sm:table-cell">
         <p className="text-gray-700">{inq.inmueble}</p>
         <p className="text-xs text-gray-400">{inq.unidad}</p>
       </td>
@@ -262,7 +265,7 @@ function FilaExpediente({ inq, onVerExpediente }) {
           {inq.status}
         </span>
       </td>
-      <td className="px-4 py-3 text-center">
+      <td className="px-4 py-3 text-center hidden sm:table-cell">
         {inq.mesesSinPagar > 0 ? (
           <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
             inq.mesesSinPagar >= 2 ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'
@@ -273,10 +276,10 @@ function FilaExpediente({ inq, onVerExpediente }) {
           <span className="text-green-600 text-base">✓</span>
         )}
       </td>
-      <td className="px-4 py-3 text-right">
+      <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={onVerExpediente}
-          className="text-xs text-terra-copper hover:text-terra-copper-dark border border-terra-copper/30 hover:border-terra-copper hover:bg-terra-cream px-3 py-1.5 rounded-lg transition-all font-medium"
+          className="hidden sm:inline-flex text-xs text-terra-copper hover:text-terra-copper-dark border border-terra-copper/30 hover:border-terra-copper hover:bg-terra-cream px-3 py-1.5 rounded-lg transition-all font-medium"
         >
           Ver expediente →
         </button>
@@ -628,13 +631,13 @@ function TabCasosActivos() {
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gradient-to-r from-terra-cream to-terra-cream-mid text-left text-xs font-bold text-terra-copper-dark uppercase tracking-wider">
-                <th className="px-4 py-3">#</th>
+                <th className="px-4 py-3 hidden sm:table-cell">#</th>
                 <th className="px-4 py-3">Inquilino</th>
-                <th className="px-4 py-3">Inmueble</th>
-                <th className="px-4 py-3 text-center">Meses</th>
-                <th className="px-4 py-3 text-right">Monto</th>
+                <th className="px-4 py-3 hidden sm:table-cell">Inmueble</th>
+                <th className="px-4 py-3 text-center hidden sm:table-cell">Meses</th>
+                <th className="px-4 py-3 text-right hidden sm:table-cell">Monto</th>
                 <th className="px-4 py-3">Estado</th>
-                <th className="px-4 py-3">Apertura</th>
+                <th className="px-4 py-3 hidden sm:table-cell">Apertura</th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
@@ -642,22 +645,23 @@ function TabCasosActivos() {
               {filtrados.map(caso => (
                 <tr
                   key={caso.nCaso}
-                  className={`hover:bg-terra-cream/30 transition-colors ${caso.estado === 'Abierto' ? 'bg-red-50/30' : ''}`}
+                  onClick={() => setModalCaso(caso)}
+                  className={`hover:bg-terra-cream/30 transition-colors cursor-pointer ${caso.estado === 'Abierto' ? 'bg-red-50/30' : ''}`}
                 >
-                  <td className="px-4 py-3 text-gray-400 font-mono text-xs">#{caso.nCaso}</td>
+                  <td className="px-4 py-3 text-gray-400 font-mono text-xs hidden sm:table-cell">#{caso.nCaso}</td>
                   <td className="px-4 py-3">
                     <p className="font-medium text-gray-800">{caso.inquilino}</p>
                     {caso.unidad && <p className="text-xs text-gray-400">{caso.unidad}</p>}
                   </td>
-                  <td className="px-4 py-3 text-gray-600">{caso.inmueble}</td>
-                  <td className="px-4 py-3 text-center">
+                  <td className="px-4 py-3 text-gray-600 hidden sm:table-cell">{caso.inmueble}</td>
+                  <td className="px-4 py-3 text-center hidden sm:table-cell">
                     <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
                       caso.mesesSinPagar >= 3 ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'
                     }`}>
                       {caso.mesesSinPagar}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-right font-semibold text-gray-700">
+                  <td className="px-4 py-3 text-right font-semibold text-gray-700 hidden sm:table-cell">
                     ${Number(caso.montoAdeudado).toFixed(2)}
                   </td>
                   <td className="px-4 py-3">
@@ -665,13 +669,13 @@ function TabCasosActivos() {
                       {caso.estado}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-xs text-gray-400">{caso.fechaApertura}</td>
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-3 text-xs text-gray-400 hidden sm:table-cell">{caso.fechaApertura}</td>
+                  <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center justify-end gap-2">
                       <LinkInquilino nombre={caso.inquilino} inmueble={caso.inmueble} />
                       <button
                         onClick={() => setModalCaso(caso)}
-                        className="text-xs text-terra-copper hover:text-terra-copper-dark border border-terra-copper/30 hover:border-terra-copper hover:bg-terra-cream px-3 py-1.5 rounded-lg transition-all font-medium"
+                        className="hidden sm:inline-flex text-xs text-terra-copper hover:text-terra-copper-dark border border-terra-copper/30 hover:border-terra-copper hover:bg-terra-cream px-3 py-1.5 rounded-lg transition-all font-medium"
                       >
                         Gestionar →
                       </button>
@@ -1798,7 +1802,8 @@ function TabReportes() {
             </div>
           ))}
         </div>
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full text-sm min-w-[400px]">
           <thead>
             <tr className="border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
               <th className="text-left py-2">Inmueble</th>
@@ -1833,6 +1838,7 @@ function TabReportes() {
             </tr>
           </tbody>
         </table>
+        </div>
       </SeccionReporte>
 
       {/* SECCIÓN 2 — Top críticos */}
@@ -1840,7 +1846,8 @@ function TabReportes() {
         {topCriticos.length === 0 ? (
           <p className="text-center text-gray-400 py-6 text-sm">No hay inquilinos críticos.</p>
         ) : (
-          <table className="w-full text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full text-sm min-w-[400px]">
             <thead>
               <tr className="border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 <th className="text-left py-2">#</th>
@@ -1872,16 +1879,17 @@ function TabReportes() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </SeccionReporte>
 
       {/* SECCIÓN 3 — Estado de casos legales */}
       <SeccionReporte titulo="⚖️ Estado de casos legales" subtitulo={`${casos.length} casos totales · ${casosPeriodo.length} abiertos en el periodo`}>
-        <div className="grid grid-cols-4 gap-3 mb-5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
           {Object.entries(casosPorEstado).map(([estado, count]) => (
-            <div key={estado} className={`rounded-xl border p-4 text-center ${ESTADO_BADGE[estado]?.replace('text-', 'border-').split(' ')[1] || ''} ${ESTADO_BADGE[estado] || 'bg-gray-50 text-gray-700'}`}>
-              <p className="text-2xl font-black">{count}</p>
-              <p className="text-xs font-medium mt-0.5 opacity-80">{estado}</p>
+            <div key={estado} className={`rounded-xl border p-3 sm:p-4 text-center ${ESTADO_BADGE[estado]?.replace('text-', 'border-').split(' ')[1] || ''} ${ESTADO_BADGE[estado] || 'bg-gray-50 text-gray-700'}`}>
+              <p className="text-xl sm:text-2xl font-black">{count}</p>
+              <p className="text-xs font-medium mt-0.5 opacity-80 leading-tight">{estado}</p>
             </div>
           ))}
         </div>

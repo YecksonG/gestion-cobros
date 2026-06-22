@@ -16,7 +16,7 @@ const NAV_ITEMS = [
   { to: '/usuarios',         icon: '🔧', label: 'Usuarios' },
 ];
 
-function Sidebar() {
+function Sidebar({ isOpen = false, onClose = () => {} }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { usuario, logout } = useAuth();
@@ -27,8 +27,24 @@ function Sidebar() {
   };
 
   return (
-    <aside className="sidebar-enter w-64 bg-gradient-to-b from-[#1e2631] via-[#1a2236] to-[#12181f] text-white flex flex-col shadow-2xl z-10 border-r border-[#d4a373]/20" style={{backgroundImage: 'linear-gradient(180deg, rgba(212,163,115,0.08) 0%, rgba(212,163,115,0.03) 100%), linear-gradient(to bottom, #1e2631, #1a2236, #12181f)'}}>
-      <Link to="/" className="block p-6 border-b border-[#d4a373]/20 hover:bg-white/5 transition-colors duration-200 group">
+    <aside
+      className={`sidebar-enter fixed lg:static inset-y-0 left-0 z-50 w-64 max-w-[80vw]
+        transform transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0
+        bg-gradient-to-b from-[#1e2631] via-[#1a2236] to-[#12181f] text-white
+        flex flex-col shadow-2xl border-r border-[#d4a373]/20`}
+      style={{backgroundImage: 'linear-gradient(180deg, rgba(212,163,115,0.08) 0%, rgba(212,163,115,0.03) 100%), linear-gradient(to bottom, #1e2631, #1a2236, #12181f)'}}
+    >
+      <button
+        onClick={onClose}
+        className="lg:hidden absolute top-4 right-4 z-10 p-1.5 rounded-lg text-[#d4a373] hover:bg-white/10 transition-colors"
+        aria-label="Cerrar menú"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <Link to="/" onClick={onClose} className="block p-6 border-b border-[#d4a373]/20 hover:bg-white/5 transition-colors duration-200 group">
         <h1 className="text-2xl font-black tracking-[0.15em] text-[#d4a373] group-hover:text-[#e8b88a] transition-colors duration-200">TERRAVIA</h1>
         <p className="text-xs text-gray-500 mt-1 uppercase tracking-widest font-semibold">Sistema de Gestión</p>
         <div className="h-px bg-gradient-to-r from-[#d4a373]/0 via-[#d4a373]/30 to-[#d4a373]/0 mt-3"></div>
@@ -45,6 +61,7 @@ function Sidebar() {
             <Link
               key={to}
               to={to}
+              onClick={onClose}
               className={`relative flex items-center justify-between w-full px-3 py-2.5 rounded-lg transition-all duration-200 group ${
                 activo
                   ? 'bg-gradient-to-r from-[#d4a373]/20 to-[#995a37]/15 text-[#ffd699] border-l-2 border-[#d4a373] shadow-lg shadow-[#d4a373]/15'
@@ -81,6 +98,7 @@ function Sidebar() {
       <div className="px-4 pb-3">
         <Link
           to="/"
+          onClick={onClose}
           className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg border border-[#d4a373]/40 text-[#d4a373] hover:bg-gradient-to-r hover:from-[#d4a373]/15 hover:to-[#a67c52]/10 hover:border-[#d4a373]/70 hover:text-[#ffd699] transition-all duration-200 text-xs font-medium tracking-wide group shadow-sm shadow-[#d4a373]/10 hover:shadow-[#d4a373]/20"
         >
           <span className="group-hover:scale-110 transition-transform">⌂</span>

@@ -271,16 +271,16 @@ function HistorialCambios() {
   return (
     <div className="space-y-6">
       {/* ENCABEZADO */}
-      <div className="bg-gradient-to-r from-terra-copper to-terra-navy text-white p-8 rounded-xl shadow-lg">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-3xl font-bold">📋 Panel Administrativo</h1>
-            <p className="text-sm opacity-90 mt-2">Auditoría y gestión de datos - Acceso protegido</p>
+      <div className="bg-gradient-to-r from-terra-copper to-terra-navy text-white p-4 sm:p-8 rounded-xl shadow-lg">
+        <div className="flex items-start justify-between gap-3 mb-4 sm:mb-6">
+          <div className="min-w-0">
+            <h1 className="text-xl sm:text-3xl font-bold truncate">📋 Panel Administrativo</h1>
+            <p className="text-xs sm:text-sm opacity-90 mt-1 sm:mt-2">Auditoría y gestión de datos - Acceso protegido</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-shrink-0">
             <button
               onClick={() => navigate('/')}
-              className="px-4 py-2 bg-red-600/80 hover:bg-red-700 rounded-lg font-semibold transition text-white"
+              className="px-3 sm:px-4 py-2 bg-red-600/80 hover:bg-red-700 rounded-lg font-semibold transition text-white text-sm"
             >
               ❌ Salir
             </button>
@@ -288,45 +288,45 @@ function HistorialCambios() {
         </div>
 
         {/* PESTAÑAS */}
-        <div className="flex gap-4 border-t border-white/20 pt-4">
+        <div className="flex flex-wrap gap-2 border-t border-white/20 pt-3 sm:pt-4">
           <button
             onClick={() => {
               setPestanaActiva('cambios');
               cargarHistorial();
             }}
-            className={`px-6 py-2 font-semibold rounded-lg transition ${
+            className={`px-3 sm:px-6 py-2 text-sm font-semibold rounded-lg transition ${
               pestanaActiva === 'cambios'
                 ? 'bg-white text-terra-copper'
                 : 'bg-white/10 text-white hover:bg-white/20'
             }`}
           >
-            📝 Historial de Cambios
+            📝 Historial
           </button>
           <button
             onClick={() => {
               setPestanaActiva('pagos');
               cargarPagos();
             }}
-            className={`px-6 py-2 font-semibold rounded-lg transition ${
+            className={`px-3 sm:px-6 py-2 text-sm font-semibold rounded-lg transition ${
               pestanaActiva === 'pagos'
                 ? 'bg-white text-terra-copper'
                 : 'bg-white/10 text-white hover:bg-white/20'
             }`}
           >
-            💰 Gestionar Pagos
+            💰 Pagos
           </button>
           <button
             onClick={() => {
               setPestanaActiva('bugs');
               cargarBugs();
             }}
-            className={`px-6 py-2 font-semibold rounded-lg transition ${
+            className={`px-3 sm:px-6 py-2 text-sm font-semibold rounded-lg transition ${
               pestanaActiva === 'bugs'
                 ? 'bg-white text-terra-copper'
                 : 'bg-white/10 text-white hover:bg-white/20'
             }`}
           >
-            🐞 Reportes de Bugs
+            🐞 Bugs
           </button>
         </div>
       </div>
