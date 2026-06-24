@@ -1351,7 +1351,7 @@ function TabArchivoDigital() {
       <div className="text-xs text-terra-copper/80 max-w-lg mx-auto text-left bg-white rounded-lg p-4 border border-terra-gold/20">
         <p className="font-semibold mb-2">📝 Cómo configurar:</p>
         <ol className="list-decimal list-inside space-y-1.5">
-          <li>Crea una carpeta en Google Drive (ej: <em>Control Terravia - Archivo Legal</em>)</li>
+          <li>Crea una carpeta en Google Drive (ej: <em>Gestión de Cobros - Archivo Legal</em>)</li>
           <li>Comparte la carpeta con los correos del equipo legal con permiso de Editor</li>
           <li>Copia el ID de la carpeta (parte final de la URL: <code className="bg-terra-cream-mid px-1 rounded">/folders/[ID]</code>)</li>
           <li>En la hoja <strong>⚙️ Config</strong>, agrega una fila con:
@@ -1764,7 +1764,7 @@ function TabReportes() {
 
       {/* Encabezado del reporte (visible en impresión) */}
       <div className="hidden print:block mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Reporte Legal — Control Terravia</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Reporte Legal — Gestión de Cobros</h1>
         <p className="text-sm text-gray-500 mt-1">
           {periodoLabel} · Generado el {new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' })}
         </p>
@@ -1939,7 +1939,7 @@ function TabReportes() {
 
       {/* Pie del reporte impreso */}
       <div className="hidden print:block mt-8 text-center text-xs text-gray-400 border-t border-gray-200 pt-4">
-        <p>Control Terravia · Sistema de Gestión de Arrendamientos · Reporte legal generado automáticamente</p>
+        <p>Gestión de Cobros · Sistema de Gestión de Arrendamientos · Reporte legal generado automáticamente</p>
       </div>
     </div>
   );

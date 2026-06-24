@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { GAS_SCRIPT_URL } from '../services/api';
 
-const STORAGE_KEY = 'terravia-auth-session';
+const STORAGE_KEY = 'gestion-cobros-auth-session';
 
 /**
  * Hook de autenticación global.

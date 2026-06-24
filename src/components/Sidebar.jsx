@@ -45,7 +45,7 @@ function Sidebar({ isOpen = false, onClose = () => {} }) {
         </svg>
       </button>
       <Link to="/" onClick={onClose} className="block p-6 border-b border-[#d4a373]/20 hover:bg-white/5 transition-colors duration-200 group">
-        <h1 className="text-2xl font-black tracking-[0.15em] text-[#d4a373] group-hover:text-[#e8b88a] transition-colors duration-200">TERRAVIA</h1>
+        <h1 className="text-lg font-black tracking-[0.1em] text-[#d4a373] group-hover:text-[#e8b88a] transition-colors duration-200">GESTIÓN DE COBROS</h1>
         <p className="text-xs text-gray-500 mt-1 uppercase tracking-widest font-semibold">Sistema de Gestión</p>
         <div className="h-px bg-gradient-to-r from-[#d4a373]/0 via-[#d4a373]/30 to-[#d4a373]/0 mt-3"></div>
       </Link>

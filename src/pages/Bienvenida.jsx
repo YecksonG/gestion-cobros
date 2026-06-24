@@ -69,7 +69,7 @@ function Bienvenida() {
           <p className="text-[#d4a373]/70 text-xs uppercase tracking-[0.3em] font-medium">Sistema de Gestión</p>
           <div className="w-10 h-px bg-gradient-to-l from-transparent to-[#d4a373]/60" />
         </div>
-        <h1 className="text-4xl sm:text-6xl font-black tracking-[0.1em] sm:tracking-[0.2em] text-[#d4a373] mb-1 drop-shadow-lg">TERRAVIA</h1>
+        <h1 className="text-3xl sm:text-5xl font-black tracking-[0.1em] sm:tracking-[0.2em] text-[#d4a373] mb-1 drop-shadow-lg">GESTIÓN DE COBROS</h1>
         <p className="text-gray-500 text-xs uppercase tracking-widest mb-8">Arrendamientos · Cobros · Control</p>
 
         <div className="flex flex-col items-center gap-1">
