@@ -5,7 +5,7 @@ import axios from 'axios';
 // En producción (vercel): usa la URL completa del Google Apps Script
 const isProduction = window.location.hostname.includes('vercel.app');
 export const GAS_SCRIPT_URL = isProduction
-  ? 'https://script.google.com/macros/s/AKfycbziE7-v21rMxN98s6XXE049cRMBWHwMK-yUffyCIV9t3uCcMlkylLp5XeaHq_EkR8wj/exec'
+  ? 'https://script.google.com/macros/s/AKfycby_tHZK1lz3-hmIuAFRwQDkIv3rbE8pC21a_82Ww4ltpo1yYg-ibiAqucjEncZZgjk/exec'
   : '/api';
 
 // Alias interno
