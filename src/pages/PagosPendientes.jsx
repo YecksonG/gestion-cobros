@@ -14,7 +14,7 @@ function PagosPendientes() {
   const [filtroInmueble, setFiltroInmueble] = useState('');
   const [procesandoDarDeBaja, setProcesandoDarDeBaja] = useState(false);
 
-  const INMUEBLES = ['Miko', 'Federación', 'La Candelaria'];
+  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   // Cargar clientes disponibles
   useEffect(() => {

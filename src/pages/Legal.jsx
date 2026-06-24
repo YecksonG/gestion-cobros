@@ -157,9 +157,9 @@ function TabExpedientes() {
           className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-terra-copper/20 focus:border-terra-copper"
         >
           <option value="Todos">Todos los inmuebles</option>
-          <option value="Miko">Miko</option>
-          <option value="Federación">Federación</option>
-          <option value="La Candelaria">La Candelaria</option>
+<option value="Tulipanes">Tulipanes</option>
+            <option value="Remanso">Remanso</option>
+            <option value="El Morro">El Morro</option>
         </select>
         <select
           value={filtroEstado}
@@ -1152,9 +1152,9 @@ function ModalNuevaEntrada({ casos, onClose, onGuardado }) {
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-terra-copper/20 focus:border-terra-copper"
               >
                 <option value="">— Seleccionar —</option>
-                <option>Miko</option>
-                <option>Federación</option>
-                <option>La Candelaria</option>
+                <option>Tulipanes</option>
+                <option>Remanso</option>
+                <option>El Morro</option>
               </select>
             </div>
           </div>
@@ -1412,9 +1412,9 @@ function TabArchivoDigital() {
           className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-terra-copper/20 focus:border-terra-copper"
         >
           <option value="Todos">Todos los inmuebles</option>
-          <option value="Miko">Miko</option>
-          <option value="Federación">Federación</option>
-          <option value="La Candelaria">La Candelaria</option>
+<option value="Tulipanes">Tulipanes</option>
+            <option value="Remanso">Remanso</option>
+            <option value="El Morro">El Morro</option>
         </select>
         <select
           value={filtroArchivos}
@@ -1687,7 +1687,7 @@ function TabReportes() {
 
   // ── Sección 1: Mora por inmueble ──
   const moraPorInmueble = {};
-  ['Miko', 'Federación', 'La Candelaria'].forEach(inm => {
+  ['Tulipanes', 'Remanso', 'El Morro'].forEach(inm => {
     moraPorInmueble[inm] = { inquilinosMora: 0, totalAdeudado: 0, totalContratos: 0 };
   });
   inquilinos.forEach(i => {

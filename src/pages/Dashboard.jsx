@@ -3,7 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { GAS_SCRIPT_URL } from '../services/api';
 
-const INMUEBLES = ['Todos', 'Miko', 'Federación', 'La Candelaria'];
+const INMUEBLES = ['Todos', 'Tulipanes', 'Remanso', 'El Morro'];
 const PERIODOS = [
   { value: 'Dia',     label: 'Hoy' },
   { value: 'Semana',  label: 'Esta Semana' },

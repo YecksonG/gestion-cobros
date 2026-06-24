@@ -24,7 +24,7 @@ const INPUT_BASE   = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-
 const INPUT_RO     = 'w-full px-3 py-2.5 border border-gray-100 rounded-lg text-sm text-gray-500 bg-gray-50 cursor-not-allowed';
 const SELECT_BASE  = `${INPUT_BASE}`;
 
-const INMUEBLES = ['Miko', 'Federación', 'La Candelaria', 'Valencia'];
+const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
 // ── Componentes UI ────────────────────────────────────────────────────────────
 

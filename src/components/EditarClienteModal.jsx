@@ -62,7 +62,7 @@ function EditarClienteModal({ isOpen, onClose, nombreCliente, inmueble }) {
   const [mensaje, setMensaje] = useState('');
   const [error, setError] = useState('');
 
-  const INMUEBLES = ['Miko', 'Federación', 'La Candelaria', 'Valencia'];
+  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   const formatearFecha = (fecha) => {
     if (!fecha) return '';

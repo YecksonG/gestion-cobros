@@ -47,7 +47,7 @@ function RegistroCobros() {
   const [totalMora, setTotalMora] = useState(0);
   const [totalACobrar, setTotalACobrar] = useState(0);
 
-  const INMUEBLES = ['Miko', 'Federación', 'La Candelaria'];
+  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   // DETECTAR SI VIENE DE RENOVACIÓN O AGENDA
   useEffect(() => {

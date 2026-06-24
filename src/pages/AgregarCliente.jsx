@@ -84,7 +84,7 @@ function AgregarCliente() {
 
   const [guardando, setGuardando] = useState(false);
 
-  const INMUEBLES = ['Miko', 'Federación', 'La Candelaria'];
+  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   // Máscara para input de fecha DD/MM/YYYY con validación día ≤31, mes ≤12
   const aplicarMascaraFecha = (valorNuevo, valorAnterior) => {

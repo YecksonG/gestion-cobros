@@ -32,7 +32,7 @@ export default function HistorialPagos() {
   const [filtroFechaInicio, setFiltroFechaInicio] = useState('');
   const [filtroFechaFin, setFiltroFechaFin] = useState('');
 
-  const INMUEBLES = ['Miko', 'Federación', 'La Candelaria'];
+  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   useEffect(() => {
     cargarDatos();

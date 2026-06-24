@@ -70,7 +70,7 @@ function EditarCliente() {
   const [error, setError] = useState('');
   const [mostrarForm, setMostrarForm] = useState(false);
 
-  const INMUEBLES = ['Miko', 'Federación', 'La Candelaria', 'Valencia'];
+  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   // Convertir fecha ISO a DD/MM/YYYY
   const formatearFecha = (fecha) => {

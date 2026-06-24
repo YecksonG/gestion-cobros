@@ -25,9 +25,9 @@ const COLOR_STATUS = {
 };
 
 const COLORES_INMUEBLE = {
-  'Federación':    'bg-blue-600',
-  'La Candelaria': 'bg-emerald-600',
-  'Miko':          'bg-violet-600',
+  'Remanso':    'bg-blue-600',
+  'El Morro':   'bg-emerald-600',
+  'Tulipanes':  'bg-violet-600',
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
