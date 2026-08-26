@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { GAS_SCRIPT_URL } from '../services/api';
+import { LISTA_INMUEBLES as INMUEBLES } from '../config/inmuebles';
 
 function formatearFechaSegura(fecha) {
   if (fecha === null || fecha === undefined || fecha === '') return '—';
@@ -31,8 +32,6 @@ export default function HistorialPagos() {
   const [filtroBusqueda, setFiltroBusqueda] = useState('');
   const [filtroFechaInicio, setFiltroFechaInicio] = useState('');
   const [filtroFechaFin, setFiltroFechaFin] = useState('');
-
-  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   useEffect(() => {
     cargarDatos();

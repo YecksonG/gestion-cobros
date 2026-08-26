@@ -95,10 +95,10 @@ function Bienvenida() {
             }}
             className={`
               group relative flex flex-col items-center gap-3 p-5
-              bg-white/[0.05] hover:bg-white/[0.12]
-              border border-[#cfcfcf]/40 hover:border-[#cfcfcf]/70
+              bg-white/[0.05] hover:bg-white/[0.10]
+              border border-[#d4a373]/25 hover:border-[#d4a373]/60
               rounded-2xl backdrop-blur-md
-              transition-all duration-300 cursor-pointer
+              shadow-lg shadow-black/20 hover:shadow-[#d4a373]/15 transition-all duration-300 cursor-pointer
               hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#d4a373]/20
               card-pop overflow-hidden
             `}

@@ -4,6 +4,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { GAS_SCRIPT_URL } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
+import { COLORES_INMUEBLE } from '../config/inmuebles';
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -22,12 +23,6 @@ const COLOR_STATUS = {
   'Vencido':          'bg-yellow-100 text-yellow-700 border-yellow-200',
   'Para Dar de Baja': 'bg-red-100   text-red-700    border-red-200',
   'Inactivo':         'bg-gray-100  text-gray-500   border-gray-200',
-};
-
-const COLORES_INMUEBLE = {
-  'Remanso':    'bg-blue-600',
-  'El Morro':   'bg-emerald-600',
-  'Tulipanes':  'bg-violet-600',
 };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -656,7 +651,7 @@ export default function InquilinoDetalle() {
         <p className="text-gray-700 font-semibold text-lg">{error}</p>
         <button
           onClick={() => navigate('/inquilinos')}
-          className="mt-5 px-5 py-2 bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white font-bold rounded-lg shadow-sm hover:from-terra-copper-dark hover:to-[#6a3a22] transition-all"
+          className="mt-5 px-5 py-2 bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white font-bold rounded-lg shadow-sm hover:from-terra-copper-dark hover:to-terra-navy transition-all"
         >
           ← Volver al directorio
         </button>
@@ -664,7 +659,7 @@ export default function InquilinoDetalle() {
     );
   }
 
-  const badgeInmueble = COLORES_INMUEBLE[inmueble] || 'bg-gray-500';
+  const badgeInmueble = COLORES_INMUEBLE[inmueble]?.bg || 'bg-slate-600';
   const badgeStatus   = COLOR_STATUS[cliente?.statusContrato] || 'bg-gray-100 text-gray-600 border-gray-200';
   const mesesPendientes = mesesResumen?.meses?.filter(m => !m.pagado).length || 0;
   const moraTotal       = mesesResumen?.moraTotalAcumulada || cliente?.moraActual || 0;

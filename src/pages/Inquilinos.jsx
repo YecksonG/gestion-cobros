@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { obtenerInquilinos } from '../services/api';
-
-const COLORES_INMUEBLE = {
-  'Remanso': { bg: 'bg-blue-600', light: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-700', dot: 'bg-blue-500' },
-  'El Morro': { bg: 'bg-emerald-600', light: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-700', dot: 'bg-emerald-500' },
-  'Tulipanes': { bg: 'bg-violet-600', light: 'bg-violet-50', border: 'border-violet-200', text: 'text-violet-700', dot: 'bg-violet-500' },
-};
-
-const COLOR_DEFAULT = { bg: 'bg-gray-600', light: 'bg-gray-50', border: 'border-gray-200', text: 'text-gray-700', dot: 'bg-gray-400' };
+import { COLORES_INMUEBLE, COLOR_INMUEBLE_DEFAULT as COLOR_DEFAULT } from '../config/inmuebles';
 
 function StatusBadge({ status }) {
   if (status === 'Inactivo')        return <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-gray-200 text-gray-600">Inactivo</span>;

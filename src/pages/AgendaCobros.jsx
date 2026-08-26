@@ -641,10 +641,10 @@ function AgendaCobros() {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
             {/* Encabezado */}
-            <div className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white p-6 flex justify-between items-center">
+            <div className="bg-gradient-to-r from-terra-navy via-terra-navy-mid to-terra-navy-deep text-white p-6 flex justify-between items-center border-b border-[#d4a373]/30">
               <div>
-                <h2 className="text-xl font-bold">📧 Enviar Email de Cobro</h2>
-                <p className="text-sm opacity-90 mt-1">{clienteEvt?.nombre}</p>
+                <h2 className="text-xl font-bold text-[#ffd699]">📧 Enviar Email de Cobro</h2>
+                <p className="text-sm text-gray-300 mt-1">{clienteEvt?.nombre}</p>
               </div>
               <button
                 onClick={() => setMostrarModalEmail(false)}

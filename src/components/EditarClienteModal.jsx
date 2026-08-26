@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import axios from 'axios';
 import { GAS_SCRIPT_URL } from '../services/api';
+import { LISTA_INMUEBLES as INMUEBLES } from '../config/inmuebles';
 import {
   PAISES,
   aplicarMascaraNombre,
@@ -61,8 +62,6 @@ function EditarClienteModal({ isOpen, onClose, nombreCliente, inmueble }) {
   const [guardando, setGuardando] = useState(false);
   const [mensaje, setMensaje] = useState('');
   const [error, setError] = useState('');
-
-  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   const formatearFecha = (fecha) => {
     if (!fecha) return '';

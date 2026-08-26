@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GAS_SCRIPT_URL } from '../services/api';
+import { LISTA_INMUEBLES as INMUEBLES } from '../config/inmuebles';
 import {
   PAISES,
   aplicarMascaraNombre,
@@ -69,8 +70,6 @@ function EditarCliente() {
   const [mensaje, setMensaje] = useState('');
   const [error, setError] = useState('');
   const [mostrarForm, setMostrarForm] = useState(false);
-
-  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   // Convertir fecha ISO a DD/MM/YYYY
   const formatearFecha = (fecha) => {

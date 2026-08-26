@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { GAS_SCRIPT_URL } from '../services/api';
+import { LISTA_INMUEBLES as INMUEBLES } from '../config/inmuebles';
 import {
   PAISES,
   aplicarMascaraNombre,
@@ -23,8 +24,6 @@ import {
 const INPUT_BASE   = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-terra-copper/20 focus:border-terra-copper transition-colors bg-white';
 const INPUT_RO     = 'w-full px-3 py-2.5 border border-gray-100 rounded-lg text-sm text-gray-500 bg-gray-50 cursor-not-allowed';
 const SELECT_BASE  = `${INPUT_BASE}`;
-
-const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
 // ── Componentes UI ────────────────────────────────────────────────────────────
 

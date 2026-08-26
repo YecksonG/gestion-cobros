@@ -40,7 +40,7 @@ function Layout({ children, title, subtitle }) {
 
       <main className="flex-1 flex flex-col overflow-hidden min-w-0">
         <Header title={title} subtitle={subtitle} onMenuClick={() => setSidebarOpen(true)} />
-        <div className="content-enter p-4 sm:p-6 lg:p-8 overflow-auto flex-1 bg-[#f4f7f6]">
+        <div className="content-enter p-4 sm:p-6 lg:p-8 overflow-auto flex-1 bg-gradient-to-br from-slate-50 via-gray-50 to-amber-50/30">
           {children}
         </div>
       </main>

@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { registrarNuevoPago, GAS_SCRIPT_URL } from '../services/api';
 import toast from 'react-hot-toast';
 import { useAuth } from '../hooks/useAuth';
+import { LISTA_INMUEBLES } from '../config/inmuebles';
 
 registerLocale('es', es);
 
@@ -47,7 +48,7 @@ function RegistroCobros() {
   const [totalMora, setTotalMora] = useState(0);
   const [totalACobrar, setTotalACobrar] = useState(0);
 
-  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
+  const INMUEBLES = LISTA_INMUEBLES;
 
   // DETECTAR SI VIENE DE RENOVACIÓN O AGENDA
   useEffect(() => {

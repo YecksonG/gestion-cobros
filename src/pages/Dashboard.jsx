@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { GAS_SCRIPT_URL } from '../services/api';
-
-const INMUEBLES = ['Todos', 'Tulipanes', 'Remanso', 'El Morro'];
+import { INMUEBLES_CON_TODOS as INMUEBLES } from '../config/inmuebles';
 const PERIODOS = [
   { value: 'Dia',     label: 'Hoy' },
   { value: 'Semana',  label: 'Esta Semana' },

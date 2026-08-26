@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { GAS_SCRIPT_URL } from '../services/api';
+import { LISTA_INMUEBLES as INMUEBLES } from '../config/inmuebles';
 import {
   PAISES,
   aplicarMascaraNombre,
@@ -83,8 +84,6 @@ function AgregarCliente() {
   });
 
   const [guardando, setGuardando] = useState(false);
-
-  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   // Máscara para input de fecha DD/MM/YYYY con validación día ≤31, mes ≤12
   const aplicarMascaraFecha = (valorNuevo, valorAnterior) => {

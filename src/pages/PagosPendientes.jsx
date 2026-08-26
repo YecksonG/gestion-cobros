@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { GAS_SCRIPT_URL } from '../services/api';
+import { LISTA_INMUEBLES as INMUEBLES } from '../config/inmuebles';
 
 function PagosPendientes() {
   const navigate = useNavigate();
@@ -13,8 +14,6 @@ function PagosPendientes() {
   const [cargando, setCargando] = useState(false);
   const [filtroInmueble, setFiltroInmueble] = useState('');
   const [procesandoDarDeBaja, setProcesandoDarDeBaja] = useState(false);
-
-  const INMUEBLES = ['Tulipanes', 'Remanso', 'El Morro'];
 
   // Cargar clientes disponibles
   useEffect(() => {

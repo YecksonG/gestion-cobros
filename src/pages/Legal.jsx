@@ -796,7 +796,7 @@ function ModalGestionCaso({ caso, onClose, onActualizado }) {
           <button
             onClick={guardar}
             disabled={guardando}
-            className="flex-1 py-2.5 bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white rounded-xl text-sm font-semibold hover:from-terra-copper-dark hover:to-[#6a3a22] transition-all disabled:opacity-50"
+            className="flex-1 py-2.5 bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white rounded-xl text-sm font-semibold hover:from-terra-copper-dark hover:to-terra-navy transition-all disabled:opacity-50"
           >
             {guardando ? 'Guardando...' : 'Guardar cambios'}
           </button>
@@ -934,7 +934,7 @@ function TabBitacora() {
         </select>
         <button
           onClick={() => setModalAbierto(true)}
-          className="ml-auto bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-terra-copper-dark hover:to-[#6a3a22] transition-all shadow-sm flex items-center gap-2"
+          className="ml-auto bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-terra-copper-dark hover:to-terra-navy transition-all shadow-sm flex items-center gap-2"
         >
           <span>+</span> Nueva entrada
         </button>
@@ -1241,7 +1241,7 @@ function ModalNuevaEntrada({ casos, onClose, onGuardado }) {
           <button
             onClick={guardar}
             disabled={guardando}
-            className="flex-1 py-2.5 bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white rounded-xl text-sm font-semibold hover:from-terra-copper-dark hover:to-[#6a3a22] transition-all disabled:opacity-50"
+            className="flex-1 py-2.5 bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white rounded-xl text-sm font-semibold hover:from-terra-copper-dark hover:to-terra-navy transition-all disabled:opacity-50"
           >
             {guardando ? 'Guardando...' : '💾 Guardar entrada'}
           </button>
@@ -1389,7 +1389,7 @@ function TabArchivoDigital() {
             href={carpetaRaiz.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white text-sm font-semibold px-4 py-2 rounded-lg hover:from-terra-copper-dark hover:to-[#6a3a22] transition-all flex items-center gap-1.5"
+            className="bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white text-sm font-semibold px-4 py-2 rounded-lg hover:from-terra-copper-dark hover:to-terra-navy transition-all flex items-center gap-1.5"
           >
             <span>Abrir en Drive</span>
             <span className="text-xs">↗</span>
@@ -1536,7 +1536,7 @@ function ModalArchivosCliente({ inquilino, onClose, onActualizado }) {
                     href={data.folder.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-3 bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-[#6a3a22] text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 flex-shrink-0"
+                    className="ml-3 bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-terra-navy text-white text-xs font-semibold px-3 py-2 rounded-lg transition-all flex items-center gap-1.5 flex-shrink-0"
                   >
                     <span>📤 Subir / abrir</span>
                   </a>
@@ -1579,7 +1579,7 @@ function ModalArchivosCliente({ inquilino, onClose, onActualizado }) {
                       href={data.folder.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-[#6a3a22] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-all"
+                      className="inline-block bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-terra-navy text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-all"
                     >
                       📤 Abrir carpeta en Drive
                     </a>
@@ -1756,7 +1756,7 @@ function TabReportes() {
         </button>
         <button
           onClick={() => window.print()}
-          className="ml-auto bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-terra-copper-dark hover:to-[#6a3a22] transition-all shadow-sm flex items-center gap-2"
+          className="ml-auto bg-gradient-to-r from-terra-copper to-terra-copper-dark text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-terra-copper-dark hover:to-terra-navy transition-all shadow-sm flex items-center gap-2"
         >
           🖨️ Imprimir / PDF
         </button>
