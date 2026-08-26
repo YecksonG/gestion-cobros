@@ -178,7 +178,7 @@ function TabPagos({ nombre, inmueble, navigate }) {
                 </div>
                 <button
                   onClick={() => navigate('/cobros', { state: { cliente: nombre, inmueble, mesCobro: m.mes } })}
-                  className="text-xs font-bold text-white bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-[#6a3a22] px-4 py-1.5 rounded-lg shadow-sm transition-all"
+                  className="text-xs font-bold text-white bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-terra-copper-deeper px-4 py-1.5 rounded-lg shadow-sm transition-all"
                 >
                   Pagar
                 </button>
@@ -316,7 +316,7 @@ function TabContrato({ cliente, onEditarClick, onRenovarClick }) {
       <div className="flex justify-end pt-1">
         <button
           onClick={onEditarClick}
-          className="flex items-center gap-2 bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-[#6a3a22] text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-sm transition-all"
+          className="flex items-center gap-2 bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-terra-copper-deeper text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-sm transition-all"
         >
           ✏️ Editar contrato
         </button>
@@ -512,7 +512,7 @@ function TabArchivos({ nombre, inmueble }) {
             href={carpetaUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-bold text-white bg-gradient-to-r from-terra-copper to-terra-copper-dark px-3 py-1.5 rounded-lg shadow-sm hover:from-terra-copper-dark hover:to-[#6a3a22] transition-all flex items-center gap-1.5"
+            className="text-xs font-bold text-white bg-gradient-to-r from-terra-copper to-terra-copper-dark px-3 py-1.5 rounded-lg shadow-sm hover:from-terra-copper-dark hover:to-terra-copper-deeper transition-all flex items-center gap-1.5"
           >
             <span>📂</span> Abrir en Drive
           </a>

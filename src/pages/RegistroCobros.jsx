@@ -706,7 +706,7 @@ function RegistroCobros() {
           <button
             type="submit"
             disabled={enviando}
-            className="w-full py-3 bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-[#6a3a22] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition shadow-sm"
+            className="w-full py-3 bg-gradient-to-r from-terra-copper to-terra-copper-dark hover:from-terra-copper-dark hover:to-terra-copper-deeper disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl transition shadow-sm"
           >
             {enviando ? '⏳ Registrando pago...' : '✅ Registrar Pago'}
           </button>

@@ -43,7 +43,7 @@ function Login() {
       <div className="w-full max-w-md">
         {/* LOGO Y TÍTULO */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#d4a373] tracking-wider mb-2">GESTIÓN DE COBROS</h1>
+          <h1 className="text-3xl font-bold text-terra-gold tracking-wider mb-2">GESTIÓN DE COBROS</h1>
           <p className="text-gray-400 text-sm">Sistema de Gestión de Arrendamientos</p>
         </div>
 

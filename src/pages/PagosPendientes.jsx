@@ -116,7 +116,7 @@ function PagosPendientes() {
   return (
     <div className="space-y-6">
       {/* ENCABEZADO */}
-      <div className="bg-gradient-to-r from-[#995a37] to-[#1e2631] text-white p-8 rounded-xl shadow-lg">
+      <div className="bg-gradient-to-r from-terra-copper to-terra-navy text-white p-8 rounded-xl shadow-lg">
         <h1 className="text-3xl font-bold mb-2">📅 Pagos Pendientes por Mes</h1>
         <p className="text-sm opacity-90">Visualiza qué meses faltan por registrar pagos para cada cliente</p>
       </div>
@@ -131,7 +131,7 @@ function PagosPendientes() {
             setCliente(null);
             setMesesData(null);
           }}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#995a37] focus:border-transparent"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-terra-copper focus:border-transparent"
         >
           <option value="">Todos los inmuebles</option>
           {INMUEBLES.map((imm) => (
@@ -153,8 +153,8 @@ function PagosPendientes() {
                 onClick={() => handleSeleccionarCliente(cli.nombre, cli.inmueble)}
                 className={`p-4 rounded-lg border-2 text-left transition ${
                   cliente === cli.nombre && inmueble === cli.inmueble
-                    ? 'border-[#995a37] bg-[#995a37]/10'
-                    : 'border-gray-200 hover:border-[#995a37]'
+                    ? 'border-terra-copper bg-terra-copper/10'
+                    : 'border-gray-200 hover:border-terra-copper'
                 }`}
               >
                 <p className="font-bold text-gray-900">{cli.nombre}</p>
@@ -170,7 +170,7 @@ function PagosPendientes() {
       {/* MESES PENDIENTES */}
       {cargando && (
         <div className="flex flex-col items-center justify-center p-8">
-          <div className="w-12 h-12 border-4 border-[#995a37] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-terra-copper border-t-transparent rounded-full animate-spin"></div>
           <p className="mt-4 text-gray-500 font-medium animate-pulse">Cargando datos...</p>
         </div>
       )}
@@ -299,7 +299,7 @@ function PagosPendientes() {
                     {!mes.pagado && (
                       <button
                         onClick={() => irARegistroCobros(mes.mes)}
-                        className="ml-4 px-4 py-2 bg-[#995a37] text-white rounded-lg font-semibold hover:bg-[#7d4728] transition whitespace-nowrap"
+                        className="ml-4 px-4 py-2 bg-terra-copper text-white rounded-lg font-semibold hover:bg-terra-copper-dark transition whitespace-nowrap"
                       >
                         Pagar
                       </button>

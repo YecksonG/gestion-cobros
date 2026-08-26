@@ -107,7 +107,8 @@ function Dashboard() {
           </div>
 
           {/* Gráficas */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Gráficas Proporcionales */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <DonutChart
               title="💰 Distribución Financiera"
               segments={[
@@ -126,8 +127,12 @@ function Dashboard() {
               ]}
               fmt={(v) => `${v}`}
             />
+          </div>
+
+          {/* Comparativa por Inmueble */}
+          <div className="w-full">
             <BarComparison
-              title="🏢 Esperado vs Cobrado"
+              title="🏢 Recaudación por Inmueble: Esperado vs Cobrado"
               data={datos.porInmuebleCobros || {}}
             />
           </div>
@@ -285,28 +290,37 @@ function DonutChart({ title, segments, fmt }) {
       : stops.map((s) => `${s.color} ${s.startDeg}deg ${s.endDeg}deg`).join(', ');
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-      <h3 className="font-bold text-gray-800 mb-4">{title}</h3>
-      <div className="flex items-center gap-5">
-        <div className="relative flex-shrink-0 w-28 h-28">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col justify-between h-full">
+      <h3 className="font-bold text-gray-800 text-base mb-4">{title}</h3>
+      <div className="flex flex-col sm:flex-row items-center justify-around gap-6 my-auto">
+        {/* Donut Circle Proporcional */}
+        <div className="relative flex-shrink-0 w-32 h-32 sm:w-36 sm:h-36 shadow-inner rounded-full p-0.5">
           <div
-            className="w-28 h-28 rounded-full"
+            className="w-full h-full rounded-full transition-all duration-700 shadow-md"
             style={{ background: `conic-gradient(${gradient})` }}
           />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center">
-              <span className="text-xs font-bold text-gray-500">{total > 0 ? fmt(total) : '—'}</span>
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-white shadow-sm flex flex-col items-center justify-center p-1 text-center">
+              <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold">Total</span>
+              <span className="text-xs sm:text-sm font-black text-gray-800">{total > 0 ? fmt(total) : '—'}</span>
             </div>
           </div>
         </div>
-        <div className="flex-1 space-y-2 min-w-0">
+
+        {/* Leyenda y Desglose */}
+        <div className="flex-1 w-full sm:w-auto space-y-2.5 min-w-0">
           {stops.map((s) => (
-            <div key={s.label} className="flex items-center gap-2 text-xs">
-              <span className="flex-shrink-0 w-2.5 h-2.5 rounded-full" style={{ background: s.color }} />
-              <span className="text-gray-600 truncate">{s.label}</span>
-              <span className="ml-auto font-bold text-gray-800 whitespace-nowrap">
-                {fmt(s.value)} <span className="text-gray-400 font-normal">({s.pct.toFixed(0)}%)</span>
-              </span>
+            <div key={s.label} className="flex items-center justify-between gap-3 text-xs p-2 rounded-lg bg-gray-50/80 hover:bg-amber-50/40 border border-gray-100 transition-colors">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="flex-shrink-0 w-3 h-3 rounded-full shadow-sm" style={{ background: s.color }} />
+                <span className="text-gray-700 font-medium truncate">{s.label}</span>
+              </div>
+              <div className="flex items-center gap-2 font-bold text-gray-900 whitespace-nowrap">
+                <span>{fmt(s.value)}</span>
+                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-white border border-gray-200 text-gray-500">
+                  {s.pct.toFixed(0)}%
+                </span>
+              </div>
             </div>
           ))}
         </div>
@@ -320,34 +334,52 @@ function BarComparison({ title, data }) {
   const maxVal = entries.reduce((m, [, c]) => Math.max(m, parseFloat(c.esperado || 0)), 1);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-      <h3 className="font-bold text-gray-800 mb-4">{title}</h3>
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="flex justify-between items-center mb-5 pb-3 border-b border-gray-100">
+        <h3 className="font-bold text-gray-800 text-base">{title}</h3>
+        <div className="flex items-center gap-4 text-xs font-medium text-gray-500">
+          <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Esperado</span>
+          <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-green-500"></span> Cobrado</span>
+        </div>
+      </div>
+
       {entries.length === 0 ? (
         <p className="text-sm text-gray-400 text-center py-6">Sin datos</p>
       ) : (
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {entries.map(([nombre, c]) => {
             const esperado = parseFloat(c.esperado || 0);
             const cobrado = parseFloat(c.cobrado || 0);
             const espPct = maxVal > 0 ? (esperado / maxVal) * 100 : 0;
             const cobPct = maxVal > 0 ? (cobrado / maxVal) * 100 : 0;
+            const eff = esperado > 0 ? ((cobrado / esperado) * 100).toFixed(0) : 0;
+
             return (
-              <div key={nombre}>
-                <p className="text-xs font-bold text-terra-copper mb-1">{nombre}</p>
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-gray-400 w-16">Esperado</span>
-                    <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-blue-400 rounded-full transition-all duration-700" style={{ width: `${espPct}%` }} />
+              <div key={nombre} className="p-4 rounded-xl bg-gray-50/70 border border-gray-100 hover:border-terra-gold/40 hover:bg-amber-50/20 transition-all">
+                <div className="flex justify-between items-center mb-2.5">
+                  <p className="text-sm font-bold text-terra-copper">{nombre}</p>
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white border border-gray-200 text-gray-700">
+                    {eff}% Efic.
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs text-gray-500">
+                      <span>Esperado</span>
+                      <span className="font-semibold text-gray-800">${esperado.toFixed(0)}</span>
                     </div>
-                    <span className="text-xs font-semibold text-gray-700 w-14 text-right">${esperado.toFixed(0)}</span>
+                    <div className="h-2 bg-gray-200/80 rounded-full overflow-hidden">
+                      <div className="h-full bg-blue-500 rounded-full transition-all duration-700" style={{ width: `${espPct}%` }} />
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-gray-400 w-16">Cobrado</span>
-                    <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs text-gray-500">
+                      <span>Cobrado</span>
+                      <span className="font-semibold text-green-700">${cobrado.toFixed(0)}</span>
+                    </div>
+                    <div className="h-2 bg-gray-200/80 rounded-full overflow-hidden">
                       <div className="h-full bg-green-500 rounded-full transition-all duration-700" style={{ width: `${cobPct}%` }} />
                     </div>
-                    <span className="text-xs font-semibold text-green-700 w-14 text-right">${cobrado.toFixed(0)}</span>
                   </div>
                 </div>
               </div>

@@ -57,25 +57,25 @@ function Bienvenida() {
       {/* Decoración de fondo */}
       <div className="absolute inset-0 pointer-events-none select-none">
         <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-terra-copper/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-[#d4a373]/5 rounded-full blur-3xl" />
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#d4a373]/20 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#d4a373]/20 to-transparent" />
+        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-terra-gold/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-terra-gold/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-terra-gold/20 to-transparent" />
       </div>
 
       {/* Encabezado */}
       <div className="relative text-center mb-14 welcome-header">
         <div className="inline-flex items-center gap-3 mb-3">
-          <div className="w-10 h-px bg-gradient-to-r from-transparent to-[#d4a373]/60" />
-          <p className="text-[#d4a373]/70 text-xs uppercase tracking-[0.3em] font-medium">Sistema de Gestión</p>
-          <div className="w-10 h-px bg-gradient-to-l from-transparent to-[#d4a373]/60" />
+          <div className="w-10 h-px bg-gradient-to-r from-transparent to-terra-gold/60" />
+          <p className="text-terra-gold/70 text-xs uppercase tracking-[0.3em] font-medium">Sistema de Gestión</p>
+          <div className="w-10 h-px bg-gradient-to-l from-transparent to-terra-gold/60" />
         </div>
-        <h1 className="text-3xl sm:text-5xl font-black tracking-[0.1em] sm:tracking-[0.2em] text-[#d4a373] mb-1 drop-shadow-lg">GESTIÓN DE COBROS</h1>
+        <h1 className="text-3xl sm:text-5xl font-black tracking-[0.1em] sm:tracking-[0.2em] text-terra-gold mb-1 drop-shadow-lg">GESTIÓN DE COBROS</h1>
         <p className="text-gray-500 text-xs uppercase tracking-widest mb-8">Arrendamientos · Cobros · Control</p>
 
         <div className="flex flex-col items-center gap-1">
           <p className="text-white text-2xl sm:text-4xl font-extralight tabular-nums tracking-widest">{hora}</p>
           <p className="text-gray-400 text-sm capitalize mt-1">{fecha}</p>
-          <p className="text-[#d4a373] text-sm font-medium mt-2">{getGreeting()}</p>
+          <p className="text-terra-gold text-sm font-medium mt-2">{getGreeting()}</p>
         </div>
       </div>
 
@@ -96,15 +96,15 @@ function Bienvenida() {
             className={`
               group relative flex flex-col items-center gap-3 p-5
               bg-white/[0.05] hover:bg-white/[0.10]
-              border border-[#d4a373]/25 hover:border-[#d4a373]/60
+              border border-terra-gold/25 hover:border-terra-gold/60
               rounded-2xl backdrop-blur-md
-              shadow-lg shadow-black/20 hover:shadow-[#d4a373]/15 transition-all duration-300 cursor-pointer
-              hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#d4a373]/20
+              shadow-lg shadow-black/20 hover:shadow-terra-gold/15 transition-all duration-300 cursor-pointer
+              hover:-translate-y-2 hover:shadow-2xl hover:shadow-terra-gold/20
               card-pop overflow-hidden
             `}
           >
             {/* Satinado dorado de fondo */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#d4a373]/0 via-[#d4a373]/5 to-[#d4a373]/0 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-terra-gold/0 via-terra-gold/5 to-terra-gold/0 pointer-events-none" />
 
             {s.lock && (
               <span className="absolute top-3 right-3 text-[10px] opacity-50">🔒</span>
@@ -114,7 +114,7 @@ function Bienvenida() {
               <p className="text-white font-semibold text-sm leading-tight">{s.title}</p>
               <p className="text-gray-300 text-xs mt-0.5 leading-tight">{s.desc}</p>
             </div>
-            <div className="absolute bottom-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-[#d4a373]/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full" />
+            <div className="absolute bottom-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-terra-gold/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full" />
           </button>
         ))}
       </div>
