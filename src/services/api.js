@@ -881,33 +881,72 @@ async function handleSupabasePost(payload) {
       return { success: true, message: 'Usuario eliminado' };
     }
 
-    // 12. Actualizar Tasas desde API
+    // 12. Actualizar Tasas desde API (Estandarizado con Taller de Radiadores & La Parada del Sabor)
     case 'actualizarTasasDesdeAPI': {
       const { fecha, hora } = getFechaHoraActual();
-      let usd = 418.50;
-      let eur = 445.20;
-      let bcv = 398.60;
+      let bcv = 0;
+      let usd = 0;
+      let eur = 0;
 
+      // 1. Intentar APIs principales (bcv.today + dolarflow)
       try {
-        const resBCV = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
-        if (resBCV.ok) {
+        const [resBCV, resPar] = await Promise.all([
+          fetch('https://bcv.today/api/v1/rate.json', { headers: { 'Cache-Control': 'no-cache' } }).catch(() => null),
+          fetch('https://dolarflow.com/api/paralelo/', { headers: { 'Cache-Control': 'no-cache' } }).catch(() => null),
+        ]);
+
+        if (resBCV && resBCV.ok) {
           const jsonBCV = await resBCV.json();
-          if (jsonBCV.promedio) bcv = Number(jsonBCV.promedio);
+          if (jsonBCV?.USD) bcv = Number(jsonBCV.USD);
+          if (jsonBCV?.EUR) eur = Number(jsonBCV.EUR);
         }
-        const resParalelo = await fetch('https://ve.dolarapi.com/v1/dolares/paralelo');
-        if (resParalelo.ok) {
-          const jsonPar = await resParalelo.json();
-          if (jsonPar.promedio) usd = Number(jsonPar.promedio);
+
+        if (resPar && resPar.ok) {
+          const jsonPar = await resPar.json();
+          if (jsonPar?.precio) usd = Number(jsonPar.precio);
         }
       } catch (err) {
-        console.warn('Fallback a tasas calculadas:', err);
+        console.warn('Error en APIs primarias de tasas:', err);
       }
 
+      // 2. Fallback a DolarApi si alguna falló
+      if (bcv === 0 || usd === 0) {
+        try {
+          if (bcv === 0) {
+            const fbBcv = await fetch('https://ve.dolarapi.com/v1/dolares/oficial').catch(() => null);
+            if (fbBcv && fbBcv.ok) {
+              const json = await fbBcv.json();
+              if (json.promedio) bcv = Number(json.promedio);
+            }
+          }
+          if (usd === 0) {
+            const fbPar = await fetch('https://ve.dolarapi.com/v1/dolares/paralelo').catch(() => null);
+            if (fbPar && fbPar.ok) {
+              const json = await fbPar.json();
+              if (json.promedio) usd = Number(json.promedio);
+            }
+          }
+        } catch (err) {
+          console.warn('Error en fallback DolarApi:', err);
+        }
+      }
+
+      // Valores por defecto seguros si no hay internet
+      if (bcv === 0) bcv = 398.50;
+      if (usd === 0) usd = 418.20;
+      if (eur === 0) eur = Number((bcv * 1.07).toFixed(2));
+
       const promedio = Number(((bcv + usd) / 2).toFixed(2));
-      eur = Number((bcv * 1.07).toFixed(2));
       const fechaStr = `${fecha} ${hora}`;
 
-      const nuevasTasas = { usd, eur, bcv, promedio, fecha: fechaStr, fuente: 'APIs Financieras en Vivo' };
+      const nuevasTasas = {
+        usd,
+        eur,
+        bcv,
+        promedio,
+        fecha: fechaStr,
+        fuente: 'BCV Today + DolarFlow + DolarApi (En Vivo)',
+      };
 
       await supabase.from('tasas').insert(nuevasTasas);
       return {
@@ -916,7 +955,8 @@ async function handleSupabasePost(payload) {
         eur: String(nuevasTasas.eur),
         bcv: String(nuevasTasas.bcv),
         promedio: String(nuevasTasas.promedio),
-        message: '✅ Tasas sincronizadas en vivo con Supabase',
+        fecha: fechaStr,
+        message: '✅ Tasas oficiales BCV y Paralelo sincronizadas en vivo',
       };
     }
 
